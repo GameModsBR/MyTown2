@@ -35,7 +35,7 @@ public class CommandsEveryone extends Commands {
             name = "cidade",
             permission = "mytown.cmd",
             alias = {"t", "town", "mytown"},
-            syntax = "/cidade <command>")
+            syntax = "/cidade <comando>")
     public static CommandResponse townCommand(ICommandSender sender, List<String> args) {
         return CommandResponse.SEND_HELP_MESSAGE;
     }
@@ -119,7 +119,7 @@ public class CommandsEveryone extends Commands {
             name = "blocos",
             permission = "mytown.cmd.everyone.blocks",
             parentName = "mytown.cmd",
-            syntax = "/cidade blocos <command>")
+            syntax = "/cidade blocos <comando>")
     public static CommandResponse blocksCommand(ICommandSender sender, List<String> args) {
         return CommandResponse.SEND_HELP_MESSAGE;
     }
@@ -169,7 +169,7 @@ public class CommandsEveryone extends Commands {
             name = "perm",
             permission = "mytown.cmd.everyone.perm",
             parentName = "mytown.cmd",
-            syntax = "/cidade perm <command>")
+            syntax = "/cidade perm <comando>")
     public static CommandResponse permCommand(ICommandSender sender, List<String> args) {
         return CommandResponse.SEND_HELP_MESSAGE;
     }
@@ -284,7 +284,7 @@ public class CommandsEveryone extends Commands {
                 name = "lote",
                 permission = "mytown.cmd.everyone.plot",
                 parentName = "mytown.cmd",
-                syntax = "/cidade lote <command>")
+                syntax = "/cidade lote <comando>")
         public static CommandResponse plotCommand(ICommandSender sender, List<String> args) {
             return CommandResponse.SEND_HELP_MESSAGE;
         }
@@ -293,7 +293,7 @@ public class CommandsEveryone extends Commands {
                 name = "renomear",
                 permission = "mytown.cmd.everyone.plot.rename",
                 parentName = "mytown.cmd.everyone.plot",
-                syntax = "/cidade lote renomear <name>")
+                syntax = "/cidade lote renomear <nome>")
         public static CommandResponse plotRenameCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 1) {
                 return CommandResponse.SEND_SYNTAX;
@@ -317,7 +317,7 @@ public class CommandsEveryone extends Commands {
                 name = "criar",
                 permission = "mytown.cmd.everyone.plot.new",
                 parentName = "mytown.cmd.everyone.plot",
-                syntax = "/cidade lote criar <plot>")
+                syntax = "/cidade lote criar <lote>")
         public static CommandResponse plotNewCommand(ICommandSender sender, List<String> args) {
             if(args.size() < 1) {
                 return CommandResponse.SEND_SYNTAX;
@@ -332,7 +332,7 @@ public class CommandsEveryone extends Commands {
                 name = "selecionar",
                 permission = "mytown.cmd.everyone.plot.select",
                 parentName = "mytown.cmd.everyone.plot",
-                syntax = "/cidade lote selecionar <command>")
+                syntax = "/cidade lote selecionar <comando>")
         public static CommandResponse plotSelectCommand(ICommandSender sender, List<String> args) {
             return CommandResponse.SEND_HELP_MESSAGE;
         }
