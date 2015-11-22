@@ -29,10 +29,10 @@ import java.util.List;
 public class CommandsAssistant extends Commands {
 
     @Command(
-            name = "setspawn",
+            name = "definir-spawn",
             permission = "mytown.cmd.assistant.setspawn",
             parentName = "mytown.cmd",
-            syntax = "/town setspawn")
+            syntax = "/cidade definir-spawn")
     public static CommandResponse setSpawnCommand(ICommandSender sender, List<String> args) {
         EntityPlayer player = (EntityPlayer) sender;
         Resident res = MyTownUniverse.instance.getOrMakeResident(player);
@@ -50,10 +50,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "claim",
+            name = "reivindicar",
             permission = "mytown.cmd.assistant.claim",
             parentName = "mytown.cmd",
-            syntax = "/town claim [range]")
+            syntax = "/cidade reivindicar [extensão]")
     public static CommandResponse claimCommand(ICommandSender sender, List<String> args) {
         EntityPlayer player = (EntityPlayer) sender;
         Resident res = MyTownUniverse.instance.getOrMakeResident(player);
@@ -139,10 +139,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "unclaim",
+            name = "desreinvindicar",
             permission = "mytown.cmd.assistant.unclaim",
             parentName = "mytown.cmd",
-            syntax = "/town unclaim")
+            syntax = "/cidade desreinvindicar")
     public static CommandResponse unclaimCommand(ICommandSender sender, List<String> args) {
         EntityPlayer player = (EntityPlayer) sender;
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
@@ -164,10 +164,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "invite",
+            name = "convidar",
             permission = "mytown.cmd.assistant.invite",
             parentName = "mytown.cmd",
-            syntax = "/town invite <resident>",
+            syntax = "/cidade convidar <habitante>",
             completionKeys = {"residentCompletion"})
     public static CommandResponse inviteCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
@@ -185,10 +185,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "set",
+            name = "definir",
             permission = "mytown.cmd.assistant.perm.set",
             parentName = "mytown.cmd.everyone.perm",
-            syntax = "/town perm set <flag> <value>",
+            syntax = "/cidade perm definir <flag> <valor>",
             completionKeys = "flagCompletion")
     public static CommandResponse permSetCommand(ICommandSender sender, List<String> args) {
 
@@ -212,10 +212,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "toggle",
+            name = "alternar",
             permission = "mytown.cmd.assistant.perm.toggle",
             parentName = "mytown.cmd.everyone.perm",
-            syntax = "/town perm toggle <flag>",
+            syntax = "/cidade perm alternar <flag>",
             completionKeys = "flagCompletion")
     public static CommandResponse permToggleCommand(ICommandSender sender, List<String> args) {
 
@@ -239,10 +239,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "whitelist",
+            name = "ignorar",
             permission = "mytown.cmd.assistant.perm.whitelist",
             parentName = "mytown.cmd.everyone.perm",
-            syntax = "/town perm whitelist")
+            syntax = "/cidade perm ignorar")
     public static CommandResponse permWhitelistCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
         ToolManager.instance.register(new WhitelisterTool(res));
@@ -250,10 +250,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "promote",
+            name = "promover",
             permission = "mytown.cmd.assistant.promote",
             parentName = "mytown.cmd",
-            syntax = "/town promote <resident> <rank>",
+            syntax = "/cidade promover <habitante> <posto>",
             completionKeys = {"residentCompletion", "rankCompletion"})
     public static CommandResponse promoteCommand(ICommandSender sender, List<String> args) {
         if (args.size() < 2)
@@ -282,10 +282,10 @@ public class CommandsAssistant extends Commands {
         }
 
         @Command(
-                name = "add",
+                name = "adicionar",
                 permission = "mytown.cmd.assistant.ranks.add",
                 parentName = "mytown.cmd.everyone.ranks",
-                syntax = "/town ranks add <name> [templateRank]",
+                syntax = "/cidade postos adicionar <nome> [postoModelo]",
                 completionKeys = {"-", "ranksCompletion"})
         public static CommandResponse ranksAddCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 1)
@@ -310,10 +310,10 @@ public class CommandsAssistant extends Commands {
         }
 
         @Command(
-                name = "remove",
+                name = "remover",
                 permission = "mytown.cmd.assistant.ranks.remove",
                 parentName = "mytown.cmd.everyone.ranks",
-                syntax = "/town ranks remove <rank>",
+                syntax = "/cidade postos remover <posto>",
                 completionKeys = {"rankCompletion"})
         public static CommandResponse ranksRemoveCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 1)
@@ -340,10 +340,10 @@ public class CommandsAssistant extends Commands {
         }
 
         @Command(
-                name = "set",
+                name = "definir",
                 permission = "mytown.cmd.assistant.ranks.set",
                 parentName = "mytown.cmd.everyone.ranks",
-                syntax = "/town ranks set <rank> <type>",
+                syntax = "/cidade postos definir <posto> <tipo>",
                 completionKeys = {"rankCompletion"})
         public static CommandResponse ranksSetCommand(ICommandSender sender, List<String> args) {
             if(args.size() < 2) {
@@ -382,10 +382,10 @@ public class CommandsAssistant extends Commands {
 
 
         @Command(
-                name = "add",
+                name = "adicionar",
                 permission = "mytown.cmd.assistant.ranks.perm.add",
                 parentName = "mytown.cmd.assistant.ranks.perm",
-                syntax = "/town ranks perm add <rank> <perm>",
+                syntax = "/cidade postos perm adicionar <posto> <perm>",
                 completionKeys = {"rankCompletion"})
         public static CommandResponse ranksPermAddCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 2)
@@ -402,10 +402,10 @@ public class CommandsAssistant extends Commands {
         }
 
         @Command(
-                name = "remove",
+                name = "remover",
                 permission = "mytown.cmd.assistant.ranks.perm.remove",
                 parentName = "mytown.cmd.assistant.ranks.perm",
-                syntax = "/town ranks perm remove <rank> <perm>",
+                syntax = "/cidade postos perm remover <posto> <perm>",
                 completionKeys = {"rankCompletion"})
         public static CommandResponse ranksPermRemoveCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 2)
@@ -422,10 +422,10 @@ public class CommandsAssistant extends Commands {
         }
 
         @Command(
-                name = "reset",
+                name = "redefinir",
                 permission = "mytown.cmd.assistant.ranks.reset",
                 parentName = "mytown.cmd.everyone.ranks",
-                syntax = "/town ranks reset")
+                syntax = "/cidade postos redefinir")
         public static CommandResponse ranksResetCommand(ICommandSender sender, List<String> args) {
             Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
             Town town = getTownFromResident(res);
@@ -458,16 +458,16 @@ public class CommandsAssistant extends Commands {
             name = "perm",
             permission = "mytown.cmd.assistant.ranks.perm",
             parentName = "mytown.cmd.everyone.ranks",
-            syntax = "/town ranks perm <command>")
+            syntax = "/cidade postos perm <comando>")
     public static CommandResponse ranksPermCommand(ICommandSender sender, List<String> args) {
         return CommandResponse.SEND_HELP_MESSAGE;
     }
 
     @Command(
-            name = "list",
+            name = "listar",
             permission = "mytown.cmd.assistant.ranks.perm.list",
             parentName = "mytown.cmd.assistant.ranks.perm",
-            syntax = "/town ranks perm list [rank]")
+            syntax = "/cidade postos perm listar [posto]")
     public static CommandResponse ranksPermListCommand(ICommandSender sender, List<String> args) {
         Rank rank;
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
@@ -483,10 +483,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "pass",
+            name = "transferir",
             permission = "mytown.cmd.mayor.pass",
             parentName = "mytown.cmd",
-            syntax = "/town pass <resident>",
+            syntax = "/cidade transferir <habitante>",
             completionKeys = {"residentCompletion"})
     public static CommandResponse passCommand(ICommandSender sender, List<String> args) {
         if (args.size() < 1)
@@ -517,19 +517,19 @@ public class CommandsAssistant extends Commands {
 
     public static class Plots {
         @Command(
-                name = "limit",
+                name = "limite",
                 permission = "mytown.cmd.assistant.plot.limit",
                 parentName = "mytown.cmd.everyone.plot",
-                syntax = "/town plot limit <command>")
+                syntax = "/cidade lote limite <comando>")
         public static CommandResponse plotLimitCommand(ICommandSender sender, List<String> args) {
             return CommandResponse.SEND_HELP_MESSAGE;
         }
 
         @Command(
-                name = "show",
+                name = "exibir",
                 permission = "mytown.cmd.assistant.plot.limit.show",
                 parentName = "mytown.cmd.assistant.plot.limit",
-                syntax = "/town plot limit show")
+                syntax = "/cidade lote limite exibir")
         public static CommandResponse plotLimitShowCommand(ICommandSender sender, List<String> args) {
             Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
             Town town = getTownFromResident(res);
@@ -539,10 +539,10 @@ public class CommandsAssistant extends Commands {
 
 
         @Command(
-                name = "set",
+                name = "alterar",
                 permission = "mytown.cmd.assistant.plot.limit.set",
                 parentName = "mytown.cmd.assistant.plot.limit",
-                syntax = "/town plot limit set <limit>")
+                syntax = "/cidade lite limite alterar <limit>")
         public static CommandResponse plotLimitSetCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 1)
                 return CommandResponse.SEND_SYNTAX;
@@ -561,10 +561,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "kick",
+            name = "expulsar",
             permission = "mytown.cmd.assistant.kick",
             parentName = "mytown.cmd",
-            syntax = "/town kick <resident>",
+            syntax = "/cidade expulsar <habitante>",
             completionKeys = {"residentCompletion"})
     public static CommandResponse kickCommand(ICommandSender sender, List<String> args) {
         if (args.size() < 1) {
@@ -591,10 +591,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "delete",
+            name = "apagar",
             permission = "mytown.cmd.mayor.leave.delete",
             parentName = "mytown.cmd.everyone.leave",
-            syntax = "/town leave delete")
+            syntax = "/cidade sair apagar")
     public static CommandResponse leaveDeleteCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
         Town town = getTownFromResident(res);
@@ -614,10 +614,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "rename",
+            name = "renomear",
             permission = "mytown.cmd.assistant.rename",
             parentName = "mytown.cmd",
-            syntax = "/town rename <name>")
+            syntax = "/cidade renomear <nome>")
     public static CommandResponse renameCommand(ICommandSender sender, List<String> args) {
         if (args.size() < 1)
             return CommandResponse.SEND_SYNTAX;
@@ -635,10 +635,10 @@ public class CommandsAssistant extends Commands {
     }
 
     @Command(
-            name = "withdraw",
+            name = "sacar",
             permission = "mytown.cmd.assistant.bank.withdraw",
             parentName = "mytown.cmd.everyone.bank",
-            syntax = "/town bank withdraw <amount>")
+            syntax = "/cidade banco sacar <quantia>")
     public static CommandResponse bankWithdrawCommand(ICommandSender sender, List<String> args) {
         if(args.size() < 1)
             return CommandResponse.SEND_SYNTAX;

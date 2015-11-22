@@ -31,7 +31,7 @@ public class CommandsOutsider extends Commands {
             name = "info",
             permission = "mytown.cmd.outsider.info",
             parentName = "mytown.cmd",
-            syntax = "/town info [town]",
+            syntax = "/cidade info [town]",
             completionKeys = {"townCompletionAndAll"},
             console = true)
     public static CommandResponse infoCommand(ICommandSender sender, List<String> args) {
@@ -61,10 +61,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "res",
+            name = "hab",
             permission = "mytown.cmd.outsider.res",
             parentName = "mytown.cmd",
-            syntax = "/town res <resident>",
+            syntax = "/cidade hab <habitante>",
             completionKeys = {"residentCompletion"},
             console = true)
     public static CommandResponse resCommand(ICommandSender sender, List<String> args) {
@@ -80,10 +80,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "list",
+            name = "listar",
             permission = "mytown.cmd.outsider.list",
             parentName = "mytown.cmd",
-            syntax = "/town list",
+            syntax = "/cidade listar",
             console = true)
     public static CommandResponse listCommand(ICommandSender sender, List<String> args) {
         sendMessageBackToSender(sender, getLocal().getLocalization("mytown.notification.town.list", getUniverse().towns.toString()));
@@ -91,10 +91,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "new",
+            name = "criar",
             permission = "mytown.cmd.outsider.new",
             parentName = "mytown.cmd",
-            syntax = "/town new <name>")
+            syntax = "/cidade criar <nome>")
     public static CommandResponse newTownCommand(ICommandSender sender, List<String> args) {
         if (args.size() < 1)
             return CommandResponse.SEND_SYNTAX;
@@ -129,10 +129,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "map",
+            name = "mapa",
             permission = "mytown.cmd.outsider.map",
             parentName = "mytown.cmd",
-            syntax = "/town map [on|off]")
+            syntax = "/cidade mapa [on|off]")
     public static CommandResponse mapCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
         if (args.size() == 0) {
@@ -144,10 +144,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "accept",
+            name = "aceitar",
             permission = "mytown.cmd.outsider.accept",
             parentName = "mytown.cmd",
-            syntax = "/town accept [town]",
+            syntax = "/cidade aceitar [cidade]",
             completionKeys = {"townCompletion"})
     public static CommandResponse acceptCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
@@ -175,10 +175,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "refuse",
+            name = "recusar",
             permission = "mytown.cmd.outsider.refuse",
             parentName = "mytown.cmd",
-            syntax = "/town refuse [town]",
+            syntax = "/cidade recusar [cidade]",
             completionKeys = {"townCompletion"})
     public static CommandResponse refuseCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
@@ -320,10 +320,10 @@ public class CommandsOutsider extends Commands {
     */
 
     @Command(
-            name = "help",
+            name = "ajuda",
             permission = "mytown.cmd.outsider.help",
             parentName = "mytown.cmd",
-            syntax = "/town help <command>",
+            syntax = "/cidade ajuda <comando>",
             alias = {"?", "h"},
             console = true)
     public static CommandResponse helpCommand(ICommandSender sender, List<String> args) {
@@ -340,10 +340,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "syntax",
+            name = "sintaxe",
             permission = "mytown.cmd.outsider.syntax",
             parentName = "mytown.cmd",
-            syntax = "/town syntax <command>",
+            syntax = "/cidade sintaxe <comando>",
             console = true)
     public static CommandResponse syntaxCommand(ICommandSender sender, List<String> args) {
         CommandTree tree = CommandManager.getTree("mytown.cmd");
@@ -353,10 +353,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "invites",
+            name = "convites",
             permission = "mytown.cmd.outsider.invites",
             parentName = "mytown.cmd",
-            syntax = "/town invites")
+            syntax = "/cidade convites")
     public static CommandResponse invitesCommand(ICommandSender sender, List<String> args) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(sender);
         if (res.townInvitesContainer.size() == 0)
@@ -375,10 +375,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "prices",
+            name = "preços",
             permission = "mytown.cmd.outsider.prices",
             parentName = "mytown.cmd",
-            syntax = "/town prices")
+            syntax = "/cidade precos")
     public static CommandResponse pricesCommand(ICommandSender sender, List<String> args) {
         Resident res = getUniverse().getOrMakeResident(sender);
 
