@@ -60,6 +60,11 @@ public class SellSign extends Sign {
             return;
         }
 
+        if(!plot.ownersContainer.contains(owner)) {
+            resident.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.alreadySold", owner.getPlayerName()));
+            return;
+        }
+
         if(!plot.getTown().plotsContainer.canResidentMakePlot(resident)) {
             resident.sendMessage(getLocal().getLocalization("mytown.cmd.err.plot.limit", plot.getTown().plotsContainer.getMaxPlots()));
             return;
@@ -86,6 +91,7 @@ public class SellSign extends Sign {
             resident.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.newOwner", plot.getName()));
             plot.getTown().bank.addAmount(price);
             deleteSignBlock();
+            plot.deleteSignBlocks(signType, player.worldObj);
         } else {
             resident.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.failed", EconomyProxy.getCurrency(price)));
         }
@@ -125,6 +131,7 @@ public class SellSign extends Sign {
             return new SellSign(tileEntity, (NBTTagCompound) signData);
         }
 
+        @Override
         public boolean isTileValid(TileEntitySign te) {
             if (!te.signText[0].startsWith(Sign.IDENTIFIER)) {
                 return false;
