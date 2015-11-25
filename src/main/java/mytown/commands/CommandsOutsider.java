@@ -375,10 +375,10 @@ public class CommandsOutsider extends Commands {
     }
 
     @Command(
-            name = "preços",
+            name = "pre\u00E7os",
             permission = "mytown.cmd.outsider.prices",
             parentName = "mytown.cmd",
-            syntax = "/cidade precos")
+            syntax = "/cidade pre\u00E7os")
     public static CommandResponse pricesCommand(ICommandSender sender, List<String> args) {
         Resident res = getUniverse().getOrMakeResident(sender);
 
