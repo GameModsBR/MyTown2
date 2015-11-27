@@ -4,3 +4,9 @@
 [submodule "MyPermissions"]
 	path = MyPermissions
 	url = http://github.com/myessentials/MyPermissions
+[submodule "CraftGuide"]
+	path = CraftGuide
+	url = https://github.com/joserobjr/CraftGuide.git
+[submodule "UniversalCoins"]
+	path = UniversalCoins
+	url = https://github.com/joserobjr/UniversalCoinsMod.git
