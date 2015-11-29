@@ -34,6 +34,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.world.WorldSettings;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -355,18 +356,51 @@ public class ProtectionHandlers {
         }
 
         if(ev.source.getEntity() != null) {
-            if(ev.entity instanceof EntityPlayer) {
-                // Entity vs Player (Check for Player owned Entity)
-                Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entity);
-                ProtectionManager.checkPVP(ev.source.getEntity(), res, ev);
-            } else {
-                if (ev.source.getEntity() instanceof EntityPlayer) {
-                    // Player vs Living Entity
-                    Resident res = MyTownUniverse.instance.getOrMakeResident(ev.source.getEntity());
-                    ProtectionManager.checkInteraction(ev.entity, res, ev);
-                } else {
-                    // Entity vs Living Entity
+            if (ev.source.getEntity() instanceof EntityPlayer) {
+                EntityPlayer entityPlayer = (EntityPlayer) ev.source.getEntity();
+                // Player vs Plane
+                Resident res = MyTownUniverse.instance.getOrMakeResident(ev.source.getEntity());
+                ProtectionManager.checkInteraction(ev.entity, res, ev);
+
+                if(!ev.isCanceled()) {
+                    System.out.println("DamageType: "+ev.source.damageType+" ev.ownerId:"+ev.ownerId);
+                    //if(ev.ownerId != null)
+                        //System.out.println("N-equals:"+!ev.ownerId.equals(ev.source.getEntity().getPersistentID())+" " +
+                        //        "Permission:"+!ProtectionManager.hasPermission(res, FlagType.MODIFY, ev.entity.worldObj.provider.dimensionId,
+                        //        (int)ev.entity.posX, (int)ev.entity.posY, (int)ev.entity.posZ));
+                    if(ev.ownerId != null && !ev.ownerId.equals(ev.source.getEntity().getPersistentID())) {
+                        // Non-owner attack
+                        if(ev.entity.riddenByEntity instanceof EntityPlayer) {
+                            entityPlayer.addChatComponentMessage(new ChatComponentTranslation("vehicle.you.are.not.the.owner", ev.ownerName));
+                            ev.setCanceled(true);
+                            return;
+                        }
+
+                        if(ev.source.damageType.equals("arrow") || ev.source.damageType.equals("fireball")
+                                || ev.source.damageType.equals("thrown") || ev.source.damageType.equals("player")) {
+                            entityPlayer.addChatComponentMessage(new ChatComponentTranslation("vehicle.you.are.not.the.owner", ev.ownerName));
+                            ev.setCanceled(true);
+                            return;
+                        }
+
+                        /*if(ev.source.damageType.equals("player") &&
+                                ProtectionManager.hasPermission(res, FlagType.MODIFY, ev.entity.worldObj.provider.dimensionId,
+                                        (int)ev.entity.posX, (int)ev.entity.posY, (int)ev.entity.posZ)) {
+                            //noinspection unchecked
+                            for(EntityPlayer player: (List<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList){
+                                if(player.getPersistentID().equals(ev.ownerId))
+                                    return;
+                            }
+
+                            entityPlayer.addChatComponentMessage(new ChatComponentTranslation("vehicle.you.are.not.the.owner", ev.ownerName));
+                            ev.setCanceled(true);
+                            return;
+                        }*/
+
+                    }
                 }
+            } else {
+                // Entity vs Living Entity
             }
         } else {
             // Non-Entity Damage
@@ -375,7 +409,9 @@ public class ProtectionHandlers {
 
     @SubscribeEvent
     public void onPlayerPilotEvent(PlayerPilotAircraftEvent ev) {
-        if(ev.entity.worldObj.isRemote || ev.isCanceled()) {
+        if(ev.entity.worldObj.isRemote || ev.isCanceled()
+                || (ev.entityPlayer instanceof EntityPlayerMP
+                && ((EntityPlayerMP) ev.entityPlayer).theItemInWorldManager.getGameType() == WorldSettings.GameType.CREATIVE)) {
             return;
         }
 
@@ -394,7 +430,17 @@ public class ProtectionHandlers {
     public void onPlayerSpawnVehicle(PlayerSpawnVehicleEvent ev) {
         Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entityPlayer);
         if(!ProtectionManager.hasPermission(res, FlagType.MODIFY, ev.entityPlayer.worldObj.provider.dimensionId,ev.x,ev.y,ev.z)) {
-            if(ev.y < ev.entityPlayer.worldObj.getHeightValue(ev.x, ev.y)) {
+            int heightValue = 0;
+            for(int x=-2; x<=2;x++)
+                for(int z=-2; z<=2; z++)
+                    for(int y = 255; y>=5;y--)
+                        if(ev.entity.worldObj.getBlock(ev.x+x, y, ev.z+z) != Blocks.air) {
+                            heightValue = y-1;
+                            break;
+                        };
+
+            ev.entityPlayer.addChatComponentMessage(new ChatComponentText(heightValue+" "+ev.y));
+            if(ev.y < heightValue) {
                 ev.setCanceled(true);
                 ev.entityPlayer.addChatComponentMessage(new ChatComponentText("Você só pode colocar este veículo em céu aberto"));
                 return;
