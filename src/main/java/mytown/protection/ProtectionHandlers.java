@@ -439,10 +439,9 @@ public class ProtectionHandlers {
                             break;
                         };
 
-            ev.entityPlayer.addChatComponentMessage(new ChatComponentText(heightValue+" "+ev.y));
             if(ev.y < heightValue) {
                 ev.setCanceled(true);
-                ev.entityPlayer.addChatComponentMessage(new ChatComponentText("Você só pode colocar este veículo em céu aberto"));
+                ev.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("gamemods.you.can.only.place.on.open.sky"));
                 return;
             }
         }
@@ -463,7 +462,7 @@ public class ProtectionHandlers {
                     player.dropItem(event.item, event.amount);
                 }
 
-                player.addChatComponentMessage(new ChatComponentText("Seu veículo foi recuperado"));
+                player.addChatComponentMessage(new ChatComponentTranslation("gamemode.vehicle.restored"));
                 event.setCanceled(true);
                 return;
             }
