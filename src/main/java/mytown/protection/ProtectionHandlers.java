@@ -1,5 +1,9 @@
 package mytown.protection;
 
+import br.com.gamemods.protectmyplane.event.AircraftAttackEvent;
+import br.com.gamemods.protectmyplane.event.AircraftDropEvent;
+import br.com.gamemods.protectmyplane.event.PlayerPilotAircraftEvent;
+import br.com.gamemods.protectmyplane.event.PlayerSpawnVehicleEvent;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -25,8 +29,11 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -35,6 +42,7 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -337,6 +345,82 @@ public class ProtectionHandlers {
             }
         } else {
             // Non-Entity Damage
+        }
+    }
+
+    @SubscribeEvent
+    public void onAircraftAttack(AircraftAttackEvent ev) {
+        if(ev.entity.worldObj.isRemote || ev.isCanceled()) {
+            return;
+        }
+
+        if(ev.source.getEntity() != null) {
+            if(ev.entity instanceof EntityPlayer) {
+                // Entity vs Player (Check for Player owned Entity)
+                Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entity);
+                ProtectionManager.checkPVP(ev.source.getEntity(), res, ev);
+            } else {
+                if (ev.source.getEntity() instanceof EntityPlayer) {
+                    // Player vs Living Entity
+                    Resident res = MyTownUniverse.instance.getOrMakeResident(ev.source.getEntity());
+                    ProtectionManager.checkInteraction(ev.entity, res, ev);
+                } else {
+                    // Entity vs Living Entity
+                }
+            }
+        } else {
+            // Non-Entity Damage
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerPilotEvent(PlayerPilotAircraftEvent ev) {
+        if(ev.entity.worldObj.isRemote || ev.isCanceled()) {
+            return;
+        }
+
+        Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entityPlayer);
+        ProtectionManager.checkInteraction(ev.entity, res, ev);
+
+        if(!ev.isCanceled()) {
+            if(ev.ownerId != null && !ev.ownerId.equals(ev.entityPlayer.getPersistentID())) {
+                ev.setCanceled(true);
+                ev.entityPlayer.addChatComponentMessage(new ChatComponentTranslation("vehicle.you.are.not.the.owner", ev.ownerName));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerSpawnVehicle(PlayerSpawnVehicleEvent ev) {
+        Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entityPlayer);
+        if(!ProtectionManager.hasPermission(res, FlagType.MODIFY, ev.entityPlayer.worldObj.provider.dimensionId,ev.x,ev.y,ev.z)) {
+            if(ev.y < ev.entityPlayer.worldObj.getHeightValue(ev.x, ev.y)) {
+                ev.setCanceled(true);
+                ev.entityPlayer.addChatComponentMessage(new ChatComponentText("Você só pode colocar este veículo em céu aberto"));
+                return;
+            }
+        }
+
+        ProtectionManager.checkUsage(ev.stack, res, PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK, new BlockPos(ev.x,ev.y,ev.z,ev.entityPlayer.worldObj.provider.dimensionId),0, ev);
+    }
+
+    @SubscribeEvent
+    public void onAircraftDrop(AircraftDropEvent event) {
+        if(event.ownerId == null)
+            return;
+
+        //noinspection unchecked
+        for(EntityPlayer player: (List<EntityPlayer>)MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
+            if(player.getPersistentID().equals(event.ownerId)) {
+                ItemStack stack = new ItemStack(event.item, event.amount, 0);
+                if(!player.inventory.addItemStackToInventory(stack)) {
+                    player.dropItem(event.item, event.amount);
+                }
+
+                player.addChatComponentMessage(new ChatComponentText("Seu veículo foi recuperado"));
+                event.setCanceled(true);
+                return;
+            }
         }
     }
 

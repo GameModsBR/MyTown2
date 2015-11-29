@@ -69,6 +69,7 @@ dependencies {
     // Subproject deps
     compile project(":MyEssentials-Core")
     compile project(":MyPermissions")
+    compile project(":ProtectMyPlane")
 }
 
 // Process Resources, injecting version numbers in

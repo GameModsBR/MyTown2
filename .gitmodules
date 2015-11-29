@@ -10,3 +10,6 @@
 [submodule "UniversalCoins"]
 	path = UniversalCoins
 	url = https://github.com/joserobjr/UniversalCoinsMod.git
+[submodule "ProtectMyPlane"]
+	path = ProtectMyPlane
+	url = https://github.com/joserobjr/ProtectMyPlane.git
