@@ -461,6 +461,7 @@ public class ProtectionHandlers {
                 if(!player.inventory.addItemStackToInventory(stack)) {
                     player.dropItem(event.item, event.amount);
                 }
+                player.inventoryContainer.detectAndSendChanges();
 
                 player.addChatComponentMessage(new ChatComponentTranslation("gamemode.vehicle.restored"));
                 event.setCanceled(true);
