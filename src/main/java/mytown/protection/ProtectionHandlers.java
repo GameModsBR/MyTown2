@@ -12,6 +12,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import myessentials.entities.BlockPos;
 import myessentials.entities.Volume;
+import myessentials.event.AE2PartPlaceEvent;
 import myessentials.event.BlockTrampleEvent;
 import myessentials.event.LiquidFlowEvent;
 import myessentials.event.LiquidReplaceBlockEvent;
@@ -40,6 +41,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.HashMap;
@@ -97,8 +99,11 @@ public class ProtectionHandlers {
 
         // Entity check
         // TODO: Rethink this system a couple million times before you come up with the best algorithm :P
-        for (int i = 0; i < ev.world.loadedEntityList.size(); i++) {
-            Entity entity = (Entity) ev.world.loadedEntityList.get(i);
+        int loadedEntityListSize = ev.world.loadedEntityList.size();
+        for (int i = 0; i < loadedEntityListSize; i++) {
+            Object item = ev.world.loadedEntityList.get(i);
+            if (item == null) continue;
+            Entity entity = (Entity) item;
             Town town = MyTownUtils.getTownAtPosition(entity.dimension, (int) Math.floor(entity.posX) >> 4, (int) Math.floor(entity.posZ) >> 4);
             //MyTown.instance.log.info("Checking player...");
             // Player check, every tick
@@ -115,8 +120,11 @@ public class ProtectionHandlers {
         // TileEntity check
         if(MinecraftServer.getServer().getTickCounter() % 20 == 0) {
             if (activePlacementThreads == 0) {
-                for (int i = 0; i < ev.world.loadedTileEntityList.size(); i++) {
-                    TileEntity te = (TileEntity) ev.world.loadedTileEntityList.get(i);
+                int loadedTileEntityListSize = ev.world.loadedTileEntityList.size();
+                for (int i = 0; i < loadedTileEntityListSize; i++) {
+                    Object item = ev.world.loadedTileEntityList.get(i);
+                    if (item == null) continue;
+                    TileEntity te = (TileEntity) item;
                     ProtectionManager.check(te);
                 }
             }
@@ -198,7 +206,7 @@ public class ProtectionHandlers {
         } else {
             Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entityPlayer);
             ProtectionManager.checkInteraction(ev.target, res, ev);
-            if(ev.entityPlayer.getHeldItem() != null) {
+            if(!ev.isCanceled() && ev.entityPlayer.getHeldItem() != null) {
                 BlockPos bp = new BlockPos(x, y, z, ev.target.dimension);
                 ProtectionManager.checkUsage(ev.entityPlayer.getHeldItem(), res, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, bp, -1, ev);
             }
@@ -221,10 +229,23 @@ public class ProtectionHandlers {
             if(ev.entityPlayer.getHeldItem() != null) {
                 ProtectionManager.checkUsage(ev.entityPlayer.getHeldItem(), res, ev.action, createBlockPos(ev), ev.face, ev);
             }
-            ProtectionManager.checkBlockInteraction(res, new BlockPos(ev.x, ev.y, ev.z, ev.world.provider.dimensionId), ev.action, ev);
+            if (!ev.isCanceled()) {
+                ProtectionManager.checkBlockInteraction(res, new BlockPos(ev.x, ev.y, ev.z, ev.world.provider.dimensionId), ev.action, ev);
+            }
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onAE2PartPlace(AE2PartPlaceEvent ev) {
+        if (ev.world.isRemote || ev.isCanceled()) {
+            return;
+        }
+
+        Resident res = MyTownUniverse.instance.getOrMakeResident(ev.player);
+        if(ev.player.getHeldItem() != null) {
+            ProtectionManager.checkUsage(ev.player.getHeldItem(), res, Action.RIGHT_CLICK_BLOCK, new BlockPos(ev.x, ev.y, ev.z, ev.world.provider.dimensionId), ev.face, ev);
+        }
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBlockTrample(BlockTrampleEvent ev) {
