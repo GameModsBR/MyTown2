@@ -2,6 +2,7 @@ package mytown.entities.signs;
 
 import myessentials.Localization;
 import myessentials.classtransformers.SignClassTransformer;
+import myessentials.economy.IEconManager;
 import myessentials.entities.BlockPos;
 import myessentials.entities.sign.Sign;
 import myessentials.entities.sign.SignType;
@@ -15,6 +16,8 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntitySign;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class SellSign extends Sign {
@@ -71,14 +74,18 @@ public class SellSign extends Sign {
         }
 
         if (EconomyProxy.getEconomy().takeMoneyFromPlayer(resident.getPlayer(), price)) {
+            boolean mayorOwner = true;
             for (Resident resInPlot : plot.ownersContainer) {
-                resInPlot.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.oldOwner", plot.getName(), EconomyProxy.getCurrency(price)));
+                if(mayorOwner && !resInPlot.getUUID().equals(plot.getTown().residentsMap.getMayor().getUUID()))
+                    mayorOwner = false;
             }
 
             Resident.Container residentsToRemove = new Resident.Container();
+            Resident.Container owners = new Resident.Container();
 
             residentsToRemove.addAll(plot.membersContainer);
             residentsToRemove.addAll(plot.ownersContainer);
+            owners.addAll(plot.ownersContainer);
 
             for (Resident resInPlot : residentsToRemove) {
                 MyTown.instance.datasource.unlinkResidentFromPlot(resInPlot, plot);
@@ -89,7 +96,58 @@ public class SellSign extends Sign {
             }
             MyTown.instance.datasource.linkResidentToPlot(resident, plot, true);
             resident.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.newOwner", plot.getName()));
-            plot.getTown().bank.addAmount(price);
+            boolean payed = false;
+            if(!(mayorOwner || EconomyProxy.isItemEconomy() || owners.isEmpty()))
+            {
+                if(owners.size() == 1) {
+                    IEconManager eco = EconomyProxy.getEconomy().economyManagerForUUID(owner.getUUID());
+                    if(eco != null) {
+                        eco.addToWallet(price);
+                        owner.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.oldOwnerSingle", plot.getName(), EconomyProxy.getCurrency(price)));
+                        payed = true;
+                    }
+                }
+                else {
+                    double split = ((double)price) / owners.size();
+                    double change = 0;
+                    int value = (int) split;
+                    List<IEconManager> ownerAccounts = new ArrayList<IEconManager>(owners.size());
+                    for(Resident owner: owners) {
+                        IEconManager eco = EconomyProxy.getEconomy().economyManagerForUUID(owner.getUUID());
+                        if(eco == null)
+                            change += value;
+                        else {
+                            ownerAccounts.add(eco);
+                            eco.addToWallet(value);
+                            change += split - value;
+                        }
+                    }
+
+                    if(!ownerAccounts.isEmpty()) {
+                        while (change > 1.0) {
+                            for(IEconManager account: ownerAccounts) {
+                                account.addToWallet(1);
+                                if(--change < 1.0)
+                                    break;
+                            }
+
+                            value++;
+                        }
+
+                        for(Resident owner: owners) {
+                            owner.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.oldOwnerSplit", plot.getName(), EconomyProxy.getCurrency(price), EconomyProxy.getCurrency(value)));
+                        }
+                        payed = true;
+                    }
+                }
+            }
+            if(!payed) {
+                plot.getTown().bank.addAmount(price);
+                for(Resident owner: owners) {
+                    owner.sendMessage(getLocal().getLocalization("mytown.notification.plot.buy.oldOwner", plot.getName(), EconomyProxy.getCurrency(price)));
+                }
+            }
+
             deleteSignBlock();
             plot.deleteSignBlocks(signType, player.worldObj);
         } else {
