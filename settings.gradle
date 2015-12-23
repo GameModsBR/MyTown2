@@ -1,2 +1,2 @@
 rootProject.name = "MyTown2"
-include ":MyEssentials-Core", ":MyPermissions", ":UniversalCoins", ":CraftGuide", ":ProtectMyPlane"
+include ":MyEssentials-Core", ":MyPermissions", ":UniversalCoins", ":CraftGuide", ":ProtectMyPlane", ":UniversalCoinsServer"

@@ -105,6 +105,12 @@ public class MyTownDatasource extends DatasourceSQL {
                 Town town = getUniverse().towns.get(rs.getString("townName"));
                 TownBlock block = new TownBlock(rs.getInt("dim"), rs.getInt("x"), rs.getInt("z"), rs.getBoolean("isFarClaim"), rs.getInt("pricePaid"), town);
 
+                if(town == null)
+                {
+                    LOG.error("Skipping town-block dim:"+block.getDim()+" x:"+block.getX()+" z:"+block.getZ()+" because the town "+rs.getString("townName")+" is null");
+                    continue;
+                }
+
                 town.townBlocksContainer.add(block);
 
                 MyTownUniverse.instance.addTownBlock(block);
@@ -127,6 +133,12 @@ public class MyTownDatasource extends DatasourceSQL {
                 Town town = getUniverse().towns.get(rs.getString("townName"));
                 Rank rank = new Rank(rs.getString("name"), town, Rank.Type.valueOf(rs.getString("type")));
 
+                if(town == null)
+                {
+                    LOG.error("Skipping rank " + rs.getString("name") + " on town " + rs.getString("townName") + " because Town is null");
+                    continue;
+                }
+
                 LOG.debug("Loading Rank %s for Town {}", rank.getName(), town.getName());
 
                 town.ranksContainer.add(rank);
@@ -146,7 +158,22 @@ public class MyTownDatasource extends DatasourceSQL {
             ResultSet rs = loadRankPermsStatement.executeQuery();
             while(rs.next()) {
                 Town town = getUniverse().towns.get(rs.getString("townName"));
+
+                if(town == null)
+                {
+                    LOG.error("Skipping rank permission: rank:" + rs.getString("rank") + " node:" + rs.getString("node") +
+                            " because TOWN " + rs.getString("townName") + " is null");
+                    continue;
+                }
+
                 Rank rank = town.ranksContainer.get(rs.getString("rank"));
+
+                if(rank == null)
+                {
+                    LOG.error("Skipping rank permission: rank:" + rs.getString("rank") + " node:" + rs.getString("node") +
+                            " because RANK is null on town " + rs.getString("townName"));
+                    continue;
+                }
 
                 rank.permissionsContainer.add(rs.getString("node"));
             }
@@ -265,6 +292,13 @@ public class MyTownDatasource extends DatasourceSQL {
                 }
 
                 Town town = getUniverse().towns.get(townName);
+
+                if(town == null)
+                {
+                    LOG.error("Skipping town-flag "+flag.flagType+" "+flag.value+" because town "+townName+" is null");
+                    continue;
+                }
+
                 town.flagsContainer.add(flag);
             }
         } catch (SQLException e) {
@@ -313,6 +347,11 @@ public class MyTownDatasource extends DatasourceSQL {
                 }
 
                 Plot plot = getUniverse().plots.get(plotID);
+                if(plot == null)
+                {
+                    LOG.error("Missing plot ID " + plotID + " the flag " + flag + " will be skipped");
+                    continue;
+                }
                 plot.flagsContainer.add(flag);
             }
         } catch (SQLException e) {
@@ -332,7 +371,20 @@ public class MyTownDatasource extends DatasourceSQL {
             while (rs.next()) {
                 Resident res = getUniverse().residents.get(UUID.fromString(rs.getString("resident")));
                 Town town = getUniverse().towns.get(rs.getString("town"));
+
+                if(town == null)
+                {
+                    LOG.error("Skipping resident "+res.getPlayerName()+" rank "+rs.getString("rank")+" because town "+rs.getString("town")+" is null");
+                    continue;
+                }
+
                 Rank rank = town.ranksContainer.get(rs.getString("rank"));
+
+                if(rank == null)
+                {
+                    LOG.error("Skipping resident "+res.getPlayerName()+" rank "+rs.getString("rank")+" because RANK is null on town "+rs.getString("town"));
+                    continue;
+                }
 
                 town.residentsMap.put(res, rank);
                 res.townsContainer.add(town);
@@ -405,6 +457,10 @@ public class MyTownDatasource extends DatasourceSQL {
             while (rs.next()) {
                 Plot plot = getUniverse().plots.get(rs.getInt("plotID"));
                 Resident res = getUniverse().residents.get(UUID.fromString(rs.getString("resident")));
+                if(plot == null) {
+                    LOG.error("Missing plot "+rs.getInt("plotID")+" The resident "+res+" will be skipped");
+                    continue;
+                }
 
                 if (rs.getBoolean("isOwner")) {
                     plot.ownersContainer.add(res);
@@ -481,6 +537,13 @@ public class MyTownDatasource extends DatasourceSQL {
             ResultSet rs = s.executeQuery();
             while(rs.next()) {
                 Town town = getUniverse().towns.get(rs.getString("townName"));
+
+                if(town == null)
+                {
+                    LOG.error("Skipping town bank amount:"+rs.getInt("amount")+" daysNotPaid:"+rs.getInt("daysNotPaid")+" because town "+
+                            rs.getString("townName")+" is null");
+                    continue;
+                }
 
                 town.bank.setAmount(rs.getInt("amount"));
                 town.bank.setDaysNotPaid(rs.getInt("daysNotPaid"));

@@ -27,6 +27,8 @@ public class EconomyProxy {
             return false;
         } else if(Config.instance.costItemName.get().equals(Economy.CURRENCY_UNIVERSAL_COINS)) {
             return false;
+        } else if(Config.instance.costItemName.get().equals(Economy.CURRENCY_UNIVERSAL_COINS_SERVER)) {
+            return false;
         }
         return true;
     }
