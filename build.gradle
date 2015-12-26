@@ -21,6 +21,10 @@ repositories {
         url = "http://repo.bukkit.org/content/groups/public/"
     }
     maven {
+        name = "spigot-repo"
+        url = "https://hub.spigotmc.org/nexus/content/groups/public/"
+    }
+    maven {
         name = "SpongePowered"
         url = "https://repo.spongepowered.org/maven"
     }
