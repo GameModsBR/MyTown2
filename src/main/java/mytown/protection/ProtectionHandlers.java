@@ -379,6 +379,10 @@ public class ProtectionHandlers {
         if(ev.source.getEntity() != null) {
             if (ev.source.getEntity() instanceof EntityPlayer) {
                 EntityPlayer entityPlayer = (EntityPlayer) ev.source.getEntity();
+                if(entityPlayer.getPersistentID().equals(ev.ownerId)) {
+                    // Bypass check for the owner
+                    return;
+                }
                 // Player vs Plane
                 Resident res = MyTownUniverse.instance.getOrMakeResident(ev.source.getEntity());
                 ProtectionManager.checkInteraction(ev.entity, res, ev);
