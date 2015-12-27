@@ -1,0 +1,506 @@
+# Other
+mytown.cmd.unimplemented=&c%s não está implementado no momento
+mytown.cmd.err.partOfTown=&cVocê precisa fazer parte de uma cidade
+mytown.cmd.err.town.notexist=&cA cidade %s não existe
+mytown.cmd.err.resident.notexist=&cO jogador %s não existe
+mytown.cmd.err.resident.notsametown=&cO jogador %s não está na cidade que você selecionou(%s)
+mytown.cmd.err.resident.same=&cVocê não pode fazer isso para você mesmo
+mytown.cmd.err.rank.notexist=&cO posto %s não existe em %s
+mytown.cmd.err.resident.payment=&cVocê precisa de %s para pagar por isto
+mytown.cmd.err.town.payment=&cVocê precisa de %s no banco para pagar por isso
+mytown.cmd.err.notPositiveInteger=&cO valor '%s' precisa ser um número inteiro positivo
+mytown.cmd.err.adminTown=&cAcesso negado porque %s é uma cidade da administração
+mytown.cmd.err.notInTown=&cVocê não está na cidade %s
+mytown.cmd.err.inventory=&cSeu inventário está cheio ou você já tem uma ferramenta
+mytown.cmd.err.inventory.tool.already=&cVocê já tem uma ferramenta no seu inventário, ela será substituida por uma nova
+mytown.cmd.err.rankPerm=&cVocê não tem o posto necessário para usar este comando
+mytown.notification.enter.wild=&2Você acabou de entrar na natureza
+mytown.notification.enter.town=&2Bem-vindo(a) a(o) %s
+mytown.notification.enter.ownTown=&2Bem-vindo(a) de volta a(o) %s
+
+
+# Flag based notifications
+
+# Protection
+mytown.protection.ENTER=&cVocê não está autorizado a entrar aqui
+mytown.protection.ACTIVATE=&cVocê não pode ativar este bloco
+mytown.protection.ACCESS=&cVocê não pode acessar este bloco
+mytown.protection.MODIFY=&cVocê não pode alterar o terreno aqui
+mytown.protection.PICKUP=&cVocê não pode pegar blocos/itens aqui
+mytown.protection.EXPLOSIONS=&cVocê não pode criar explosões aqui
+mytown.protection.MOBS=&cVocê não pode invocar este tipo de mob aqui
+mytown.protection.PVE=&cVocê não pode tocar nisso
+mytown.protection.USAGE=&cVocê não pode usar itens aqui
+mytown.protection.PVP=&cVocê não pode atacar jogadores aqui
+
+mytown.protection.notify.EXPLOSIONS=&3Uma explosão foi interrompida
+
+# Flag Info
+mytown.flag.ENTER=&3Permite que estrangeiros entrem
+mytown.flag.ACTIVATE=&3Permite clicar com o botão direito em portas, etc
+mytown.flag.ACCESS=&3Permite clicar com o botão direito em blocos
+mytown.flag.MODIFY=&3Permite alterar o terreno
+mytown.flag.PICKUP=&3Permite pegar itens
+mytown.flag.EXPLOSIONS=&3Permite explosões
+mytown.flag.MOBS=&3Controla se monstros podem existir aqui.
+mytown.flag.ENTITIES=&3Controla se entidades podem existir aqui.
+mytown.flag.PVE=&3Permite a interação com entidades
+mytown.flag.USAGE=&3Permite o uso de itens (ovos, baldes, etc).
+mytown.flag.PVP=&3Permite PvP - Jogador x Jogador
+mytown.flag.RESTRICTIONS=&3Dá permissão fora do lote do jogador
+mytown.flag.FAKERS=&3Permite que jogadores falsos façam tudo (ex: TCGolems)
+mytown.flag.NEARBY=&3Permite que cidades sejam feitas próximas desta cidade.
+
+# Tools
+mytown.tool.plot.sell.name=Vender Lote
+mytown.tool.plot.sell.description.header1=&3Use em um lote para colocar a placa de venda.
+mytown.tool.plot.sell.description.header2=&3Use esgueirando olhando para o ar para mudar o modo.
+mytown.tool.plot.sell.description.price=&3Preço:
+mytown.tool.plot.sell.description.mode=&3Restrito aos habitantes:
+mytown.tool.plot.sell.mode=Restrito aos habitantes
+
+mytown.tool.plot.selection.name=Seletor
+mytown.tool.plot.selection.description.header1=&3Selecione 2 blocos para fazer um lote.
+mytown.tool.plot.selection.description.header2=&3Use esgueirando olhando para o ar para mudar o modo.
+mytown.tool.plot.selection.description.name=&3Nome:
+mytown.tool.plot.selection.description.mode=&3Dependente de altura:
+mytown.tool.plot.description.mode=Dependente de altura
+
+mytown.tool.whitelister.name=Ignorador de Proteções
+mytown.tool.whitelister.description.header1=&3Selecione o bloco que irá ignorar a proteção.
+mytown.tool.whitelister.description.header2=&3Use esgueirando olhando para o ar para mudar a flag.
+mytown.tool.whitelister.description.flag=&3Flag:
+mytown.tool.whitelister.description.removal=&cRESTAURAR PROTEÇÃO
+mytown.tool.whitelister.mode=modo
+mytown.tool.whitelister.mode.removal=RESTAURAR PROTEÇÃO
+mytown.tool.whitelister.mode.flagType=tipo de flag
+
+# Sell Sign
+mytown.sign.sell.title=Lote à Venda
+mytown.sign.sell.description.owner=&9por
+mytown.sign.sell.description.price=&6
+mytown.sign.sell.description.restricted=&cRESTRITO
+
+# /ta config [load|save]
+mytown.cmd.config.load.start=&3Carregando configurações...
+mytown.cmd.config.load.stop=&aConfigurações carregadas
+mytown.cmd.config.save.start=&3Salvando configurações...
+mytown.cmd.config.save.stop=&aConfigurações salvas
+mytown.cmd.config.reset=&aO arquivo %s foi recriado com sucesso!
+
+# /t new [townname]
+mytown.cmd.err.newtown.nameinuse=&cO nome de cidade %s já está em uso
+mytown.cmd.err.newtown.positionError=&cVocê não pode fazer uma cidade em um chunk reinvidicado
+mytown.cmd.err.newtown.failed=&cHouve um problema com a criação da cidade
+mytown.cmd.err.newtown.tooClose=&cVocê está muito próximo da cidade %s. Por favor mantenha ao menos %s chunks de distância entre as cidades
+mytown.cmd.err.claim.tooClose=&cVocê está muito próximo da cidade %s. Por favor deixe ao menos %s de distância entre as cidades
+mytown.cmd.err.resident.maxTowns=&cVocê não pode criar/entrar em mais cidades, você atingiu a quantidade máxima de cidades em que você pode estar
+mytown.notification.town.created=&aA cidade %s foi criada
+mytown.notification.town.deleted=&cA cidade %s foi apagada
+mytown.notification.town.deleted.withplots=&cVocê não pode apagar cidades com lotes que você não seja proprietário
+mytown.notification.nation.created=A nação %s foi criada
+mytown.notification.nation.deleted=A nação %s foi apagada
+
+
+# /t invite
+mytown.cmd.err.invite.already=&cO(a) habitante %s já existe na cidade %s
+mytown.cmd.err.invite.noinvitations=&cVocê não tem convites
+mytown.cmd.err.resident.notexist=&cO jogador não existe
+mytown.cmd.err.invite.accept=&cVocê tem mais de um convite! &3Escolha qual convite você quer aceitar: "/t accept <nomeDaCidade>"
+mytown.cmd.err.invite.refuse=&cVocê tem mais de um convite! &3Escolha qual convite você quer recusar: "/t refuse <nomeDaCidade>"
+
+# /t friends
+mytown.cmd.err.friends.add=&c%s já é sua amiga ou você já enviou um pedido
+mytown.cmd.err.friends.remove=&c%s não é sua amiga
+mytown.cmd.err.friends.accept=&c%s não enviou pedido para você
+
+# /t claim
+mytown.cmd.err.claim.failed=&cFalha ao reinvindicar o chunk
+mytown.cmd.err.claim.already=&cEste chunk já foi reinvindicado
+mytown.cmd.err.claim.notexist=&cEste bloco não está reinvindicado pela cidade %s
+mytown.cmd.err.claim.far.notAllowed=&cVocê não pode ter mais reinvindicações distantes
+mytown.cmd.err.town.maxBlocks=&cNão há slots livres suficientes para %s chunks
+
+# /t unclaim
+mytown.cmd.err.unclaim.notInTown=&cO bloco que você quer desreinvindicar não está na cidade que você selecionou
+mytown.cmd.err.unclaim.spawnPoint=&cVocê não pode apagar o Bloco contendo o ponto de spawn
+mytown.cmd.err.unclaim.lastClaim=&cSua cidade precisa ter ao menos 1 chunk. Use "/t leave delete" para remover a cidade
+
+# /t info
+mytown.cmd.err.info.notpart=&cVocê não faz parte de uma cidade. &3Uso alternativo: "/t info <nomeDaCidade>"
+
+mytown.notification.town.list=&6-----[[&aCidades:&6]]----- \n&f%s
+mytown.notification.town.info=&6--------[[&a%s&6]]-------- \n - &2H:%s - C:%s/%s - P:%s -  \n &2Habitantes:&a %s\n &2Postos:&f %s
+
+# /t res
+
+# /t select
+mytown.cmd.err.select.notpart=&cVocê não faz parte da cidade %s. Por favor escolha uma cidade em que você seja membro
+mytown.notification.town.select=&3The town %s has been selected as your primary town
+
+# /t ranks
+mytown.cmd.err.ranks.add.already=&cO posto %s já existe
+mytown.cmd.err.ranks.add.notexist=&cO posto modelo %s não existe
+mytown.cmd.err.ranks.rem.notexist=&cO posto %s não existe na cidade %s
+mytown.cmd.err.ranks.rem.notallowed=&cO posto %s não está autorizado a ser apagado
+mytown.cmd.err.ranks.perm.notexist=&cA permissão %s não existe
+mytown.cmd.err.ranks.perm.add.already=&cO posto %s já tem a permissão %s
+mytown.cmd.err.ranks.perm.add.failed=&cFalha ao adicionar a permissão
+mytown.cmd.err.ranks.perm.remove.failed=&cFalha ao remover a permissão
+mytown.notification.town.ranks=&3Postos: %s
+mytown.cmd.err.ranks.cantDelete=&cVocê não pode apagar este tipo de posto
+mytown.cmd.err.ranks.set.already=&cO posto já tem o tipo %s
+mytown.notification.ranks.set.successful=&3O posto %s foi alterado para o tipo %s com sucesso
+mytown.cmd.err.ranks.typeNotExists=&cO tipo de posto %s não existe
+mytown.notification.ranks.reset=&3Os postos foram resetados para seus estados iniciais
+mytown.cmd.err.ranks.set.unique=&cO tipo de posto type de %s é único. Você precisa definir o tipo único primeiro.
+mytown.cmd.err.ranks.assigned=&cEste posto está definido para alguns habitantes, altere o posto deles antes de apagar este posto
+
+# /t plot
+mytown.cmd.err.plot.remove.notInPlot=&cO habitante não é um membro/proprietário deste lote
+mytown.cmd.err.plot.remove.onlyOwner=&cVocê é o único proprietário deste lote, você só pode apagar-lo
+mytown.cmd.err.plot.add.alreadyInPlot=&cO habitante já está no lote
+mytown.cmd.err.plot.start.failed=&cSeu inventário está cheio
+mytown.cmd.err.plot.failed=&cA criação do lote falhou
+mytown.cmd.err.plot.alreadySelected=&cVocê já selecionou
+mytown.cmd.err.plot.selection.outside=&cVocê não pode criar lotes fora da cidade
+mytown.cmd.err.plot.selection.otherDimension=&cO segundo canto precisa estar na mesma dimensão
+mytown.cmd.err.plot.selection.none=&cVocê não selecionou nada ainda
+mytown.cmd.err.plot.notInPlot=&cVocê não está pisando em um lote
+mytown.cmd.err.plot.sell.notInPlot=&cA seleção não está em um lote da cidade %s
+mytown.cmd.err.plot.sell.alreadyOwner=&cVocê já é um proprietário deste lote
+mytown.cmd.err.plot.noPermission=&cVocê não tem as permissões de proprietário deste lote
+mytown.cmd.err.plot.limit=&cVocê não pode ser o proprietário de mais de %s lotes
+mytown.cmd.err.plot.limit.toPlayer=&cO jogador %s não pode ser o dono de mais nenhum lote
+mytown.cmd.err.plot.tooSmall=&cSeleção muito pequena! Area mínima: %s. Altura mínimo: %s
+mytown.cmd.err.plot.tooLarge=&cSeleção muito larga! Area máxima: %s. Altura máxima: %s
+mytown.cmd.err.plot.outside=&cA seleção está fora da cidade
+mytown.cmd.err.plot.insideOther=&cA seleção está dentro do lote %s
+mytown.cmd.err.plot.name=&cUm lote com o nome %s já existealready exists
+
+mytown.notification.plot.info=&6--------[[&2Lote: &a%s&6]]--------\n&2Proprietários: &f%s\n&2Membros: &f%s\n&2Bordas: &9(%s, %s, %s)&7 --> &9(%s, %s, %s)
+mytown.notification.resident.info=&6--------[[&a%s&6]]--------\n&2Cidades: &f%s \n&2Ingressou: &a%s\n&2Ultima vez online: &a%s\n&2Extra blocks: &a%s
+mytown.notification.prices=&6--------[[&aPREÇOS&6]]--------\n&2Criação de cidade: &7%s\n&2Reinvidicação: &7%s\n&2Reinvidicações adicionais: &7%s\n&2Reinvidicações distantes: &7%s\n&2Spawn: &7%s\n&2Definir spawn: &7%s\n&2Other spawn: &7%s\n&2Town upkeep: &7%s\n&2Claim upkeep: &7%s
+mytown.notification.town.owners=&6 Proprietários: &c%s
+mytown.notification.blocks.info=&6--------[[&aBLOCOS&6]]--------\n&2Blocos: &7%s\n&2Blocos extra: &7%s \n&2Blocos distantes: &7%s
+
+# /t perm
+mytown.cmd.err.flagNotExists=&cEsta flag não existe
+mytown.cmd.err.perm.valueNotValid=&cValor inválido
+mytown.cmd.err.flag.unconfigurable=&cEsta flag não pode ser alterada
+mytown.cmd.err.flag.notForWhitelist=&cThe flag you selected is not allowed on block whitelist
+mytown.cmd.err.flag.list=&cNão há flags nesta cidade
+mytown.cmd.err.perm.valueNotValid=&cValor inválido
+mytown.cmd.err.perm.whitelist.noPermssion=&cYou do not have permission to whitelist this!
+
+# /t promote
+mytown.cmd.err.promote.notMayor=&cVocê não pode ter 2 Prefeitos em uma cidade. Tente passar a prefeitura com /t pass <habitante>
+mytown.cmd.promote.success.sender=&3%s foi &apromovido&3 para o posto &f%s
+mytown.cmd.promote.success.target=&aVocê foi promovido para o posto %s
+
+# /t setspawn
+mytown.cmd.err.setspawn.notintown=&cA posição que você está não faz parte da cidade %s
+
+# /t spawn
+mytown.cmd.err.spawn.notexist=&cO bloco da cidade em que o spawn de %s estava foi apagado ou o spawn ainda não foi definido! &3Por favor use "/t setspawn" para definir um outro
+mytown.cmd.err.spawn.cooldown=&cVocê ainda precisa esperar mais &6%s &6(&9%ss&6)&c ticks antes de se poder se teleportar novamente
+mytown.cmd.err.spawn.protected=&cVocê não pode se teleportar para o local do spawn de %s
+
+# /t kick
+mytown.cmd.err.kick.self=&cNão, você não pode se expulsar
+mytown.cmd.err.kick.mayor=&cNão, você não pode expulsar o prefeito
+mytown.notification.town.kicked=&cVocê foi expulso por %s
+
+# /t pass
+
+
+# /t bank
+mytown.cmd.err.bank.withdraw=&cVocê só tem %s no banco
+
+# /t rename
+
+# /ta new
+mytown.notification.admtown.created=&aA cidade da administração %s foi criada!
+
+# /ta delete
+mytown.adm.cmd.delete.success=&cA cidade com o nome %s foi apagada
+
+# /ta kick
+mytown.adm.cmd.err.kick.resident=&cJogador %s não faz parte da cidade %s
+mytown.notification.town.resident.remove=&aHabitante %s foi &cremovido(a)&a da cidade %s
+mytown.notification.town.resident.add=&aHabitante %s foi adicionado à cidade %s
+
+# /ta add
+mytown.adm.cmd.err.add.already=&cJogador %s já é habitante da cidade %s
+
+# /ta town
+
+# /ta res
+
+# /ta perm
+
+# /ta claim
+
+mytown.adm.cmd.far.claim=&3Você ignorou as reinvindicações distantes
+
+# /ta unclaim
+
+# /ta plot
+
+# /ta borders
+mytown.notification.town.borders.show=&3Exibindo bordas da cidade %s. Use /t borders hide para oculta-las
+mytown.notification.town.borders.hide=&aAs bordas foram ocultadas com sucesso
+
+# /ta rename
+
+# Notifications
+
+mytown.notification.block.added=&aO bloco de cidade de (%s, %s) até (%s, %s) foi adicionado à cidade %s
+mytown.notification.block.removed=&aO bloco de cidade de (%s, %s) até (%s, %s) foi removido da cidade %s
+mytown.notification.block.list=Blocos na cidade %s: %s
+mytown.notification.town.ranks.perm.list=Permissões do posto %s na cidade %s: \n%s
+mytown.notification.plot.start=&3Clique com o botão direito em 2 cantos com o Seletor para criar um lote. Use "/t plot &3select reset" para resetar a seleção
+mytown.notification.plot.selectionStart=&9Primeiro&f canto selecionado
+mytown.notification.plot.selectionEnd=&9Segundo&f canto selectionado
+mytown.notification.plot.expanded=&aO lote foi expandido verticalmente com sucesso
+mytown.notification.plot.selectionReset=&aA seleção foi resetada com sucesso
+mytown.notification.plot.created=&aNovo lote criado
+mytown.notification.plot.deleted=&cO lote %s foi apagado
+mytown.notification.plot.limit=&3Limite de propriedades de lotes por habitante: %s
+mytown.notification.plot.limit.set=&3O limite de lotes foi alterado para %s
+mytown.notification.town.plots=Lotes na cidade %s:%s
+mytown.notification.town.left=&3%s tem &crestantes&3 na cidade %s
+mytown.notification.town.left.self=&aVocê tem &crestantes&a na cidade %s
+mytown.notification.perm.success=&aFlag alterada com sucesso
+mytown.notification.town.invited.refuse=&aVocê já &cnegou&a o convite da cidade %s
+mytown.notification.town.invited.accept=&aVocê já &aaceitou&a o convite da cidade %s
+mytown.notification.town.joined=&3%s &aentrou&3 na cidade %s
+mytown.notification.town.invited=&aVocê foi convidado para a cidade %s! \n&3/t accept ou refuse para aceitar ou recusar.
+mytown.notification.town.invite.sent=&aO convite foi enviado com sucesso
+mytown.notification.town.setspawn=&aSpawn foi definido
+mytown.notification.town.left.asMayor=Antes de você sair você precisa escolher entre apagar a cidade ou passar a prefeitura para outro habitante: /t pass <habitante> ou /t leave delete
+mytown.notification.town.mayorShip.passed=Você foi promovido para Prefeito pelo Prefeito anterior
+mytown.notification.town.mayorShip.taken=Seu cargo de Prefeito foi retirado, você foi rebaixado para o posto padrão
+mytown.notification.town.delete=&cA cidade %s foi apagada pelo Prefeito (%s)
+mytown.notification.town.startedCreation=&2Iniciando a criação da cidade %s, por favor aguarde alguns segundos
+mytown.notification.plot.renamed=&aO lote foi renomeado com sucesso
+mytown.notification.plot.showing=&3Os lotes agora estão exibindo suas bordas. &3Use "/t plot hide" para &3oculta-los
+mytown.notification.plot.vanished=&aOs lotes foram ocultos com sucesso
+mytown.notification.plot.owner.sender.added=&3%s foi &aadicionado&3 como proprietário do lote %s
+mytown.notification.plot.owner.target.added=&aVocê foi adicionado como proprietário do lote %s
+mytown.notification.plot.member.sender.added=&3%s foi &aadicionado&3 como membro do lote %s
+mytown.notification.plot.member.target.added=&aVocê foi adicionado como membro do lote %s
+mytown.notification.town.added=&aVocê foi adicionado à cidade %s
+mytown.notification.town.ranks.add=&3O posto %s foi adicionado à cidade %s
+mytown.notification.db.purging=&3O banco de dados foi limpo
+mytown.notification.db.reloaded=&3O banco de dados foi recarregado para a memória
+mytown.notification.town.ranks.perm.remove=&aA permissão foi &cremovida&a com sucesso
+mytown.notification.perm.whitelist.start=&3Right-Click a block to change his flag value, depending on what flag you choosed, that flag will be changed for the block you selected.\nShift & Right-Click to change the mode from &9Town&3 to &9Plot&3 or from &9Plot&3 to &9Town&3
+mytown.notification.perm.town.whitelist.already=&3Block whitelist already exists for that flag
+mytown.notification.perm.town.whitelist.added=&aO bloco foi adicionado na whitelist para aquela flag
+mytown.notification.friends.invitationSent=&aUm pedido foi enviado
+mytown.notification.friends.gotInvitation=&aVocê recebeu um novo pedido de amizade de %s!
+mytown.notification.friends.removed=&aO jogador foi removido da sua lista de amigos
+mytown.notification.friends.gotRemoved=&3Você foi removido da lista de amigos de %s
+mytown.notification.friends.accepted=&a%s aceitou seu pedido para estar na lista de amigos da cidade
+mytown.notification.friends.gotAccepted=&aVocê aceitou o pedido de amizade de %s
+mytown.notification.friends.refused=&c%s recusou o seu pedido para estar na lista de amigos da cidade
+mytown.notification.friends.gotRefused=&cVocê recusou o pedido de amizade de %s
+mytown.notification.resident.noInvites=&cVocê não tem nenhum pedido
+mytown.notification.resident.friends.list=&3Amigos: %s
+mytown.notification.resident.payment=&3Você pagou %s
+mytown.notification.resident.refund=&3Você foi reembolsado %s
+mytown.notification.town.payment=&3%s foi retirado do banco
+mytown.notification.town.refund=&3%s foi reembolsado ao banco
+mytown.notification.plot.sender.removed=&c%s foi removido do lote
+mytown.notification.plot.target.removed=&cVocê foi removido do lote %s
+mytown.notification.town.bank.info=&aSaldo bancário: &7%s \n&aPróximo pagamento: &7%s
+mytown.notification.town.upkeep=&3Um novo dia está sobre nós, os impostos foram recolhidos
+mytown.notification.town.upkeep.failed=&cUm novo dia se passou mas o banco está sem dinheiro. %s dias restantes antes da exclusão da cidade
+mytown.notification.town.blocks.extra.set=&3A quantidade de blocos extras reinvindicáveis foi alterada para %s para a cidade %s
+mytown.notification.town.blocks.farClaims.set=&3A quantidade de reinvindicações distantes extras foi alterada para %s para a cidade %s
+mytown.notification.resident.blocks.extra.set=&3A quantidade de blocos reinvindicáveis foi alterada para %s para os habitantes de %s
+mytown.notification.plot.buy.failed=&cVocê não tem %s
+mytown.notification.plot.buy.newOwner=&aVocê comprou o lote %s com sucesso
+mytown.notification.plot.buy.oldOwner=&aO lote %s foi vendido com sucesso. %s foram enviados para o banco da cidade
+mytown.notification.plot.buy.oldOwnerSingle=&aO lote %s foi vendido com sucesso. %s foram transferidos para sua conta
+mytown.notification.plot.buy.oldOwnerSplit=&aO lote %s foi vendido com sucesso. %s foram divididos entre os proprietários. %s foram transferidos para sua conta
+mytown.notification.plot.buy.alreadySold=&cEste lote já foi vendido e %s não pode vende-lo novamente
+mytown.notification.plot.sell.start=&3Clique com o botão direito em um lote usando a ferramenta dada para colocar o lote à venda
+mytown.notification.town.renamed=&3A cidade foi renomeada
+mytown.notification.plot.enter=&2~ %s
+mytown.notification.plot.enter.unassigned=&cNão alocado
+mytown.notification.update.ranks=&aTodos os postos foram atualizados com sucesso
+mytown.notification.tool.mode=&3Alterou '%s' para %s
+mytown.notification.tool.gained=&3Você recebeu uma ferramenta
+
+# Help for commands
+mytown.cmd.assistant.blocks.help=Tudo relacionado ao Blocos de Cidade (chunks na cidade)
+mytown.cmd.assistant.claim.help=Reivindica o chunk em que você está
+mytown.cmd.assistant.invite.help=Convida um jogador para a sua cidade
+mytown.cmd.everyone.perm.help=Tudo relacionado à proteção
+mytown.cmd.assistant.perm.set.help=Define uma flag de cidade
+mytown.cmd.assistant.perm.toggle.help=Alterna uma flag de cidade
+mytown.cmd.assistant.perm.whitelist.help=Faz um bloco/entidade ignorar uma flag
+mytown.cmd.assistant.promote.help=Promove um habitante para o posto especificado
+mytown.cmd.assistant.ranks.add.help=Adiciona um posto na cidade
+mytown.cmd.assistant.ranks.perm.help=Tudo relacionado às permissões de um posto
+mytown.cmd.assistant.ranks.perm.add.help=Adiciona um nó de permissão ao posto
+mytown.cmd.assistant.ranks.perm.list.help=Lista todos os nís de permissões de um posto
+mytown.cmd.assistant.ranks.perm.remove.help=Remove um nó de permissão de um posto
+mytown.cmd.assistant.ranks.remove.help=Remove um posto
+mytown.cmd.assistant.setspawn.help=Define o spawn da cidade
+mytown.cmd.assistant.unclaim.help=Remove a reivindicação do chunk em que você está
+mytown.cmd.everyone.blocks.list.help=Lista todos os chunks que fazem parte da cidade
+mytown.cmd.everyone.leave.help=Deixa da cidade
+mytown.cmd.everyone.plot.perm.help=Proteções relacionadas aos lotes
+mytown.cmd.everyone.plot.perm.list.help=Lista todas as flags do lote e junto com seus valores
+mytown.cmd.everyone.plot.perm.set.help=Define uma flag no lote
+mytown.cmd.everyone.plot.perm.toggle.help=Alterna uma flag no lote
+mytown.cmd.everyone.plot.perm.whitelist.help=Faz com que um bloco/entidade ignore uma flag no lote
+mytown.cmd.everyone.perm.list.help=Lista todas as flags da cidade junto com seus valores
+mytown.cmd.everyone.plot.help=Tudo relacionado aos lotes
+mytown.cmd.everyone.plot.add.help=Adiciona um jogador ao lote
+mytown.cmd.everyone.plot.add.member.help=Adiciona um membro ao lote
+mytown.cmd.everyone.plot.add.owner.help=Adiciona um dono ao lote
+mytown.cmd.everyone.plot.delete.help=Remove um lote
+mytown.cmd.everyone.plot.info.help=Dá informações sobre o lote em que você está
+mytown.cmd.everyone.plot.make.help=Cria um lote pela seleção feita
+mytown.cmd.everyone.plot.rename.help=Renomeia um lote
+mytown.cmd.everyone.plot.select.help=Dá a ferramenta de seleção
+mytown.cmd.everyone.plot.select.expand.help=Expande a seleção
+mytown.cmd.everyone.plot.select.reset.help=Reinicia a seleção
+mytown.cmd.everyone.plot.show.help=Mostra todos os lotes visualmente
+mytown.cmd.everyone.plot.hide.help=Oculta todos os lotes visualmente
+mytown.cmd.everyone.ranks.help=Tudo relacionado aos postos
+mytown.cmd.everyone.ranks.list.help=Lista todos os postos da cidade
+mytown.cmd.everyone.select.help=Seleciona uma cidade em que você seja habitante
+mytown.cmd.everyone.spawn.help=Teleporta o jogador para o spawn da cidade
+mytown.cmd.outsider.accept.help=Aceita o convite para habitar uma cidade
+mytown.cmd.outsider.friends.help=Tudo relacionado aos amigos
+mytown.cmd.outsider.friends.accept.help=Aceita um pedido de amizade
+mytown.cmd.outsider.friends.add.help=Envia um pedido de amizade
+mytown.cmd.outsider.friends.list.help=Lista todos os amigos
+mytown.cmd.outsider.friends.refuse.help=Recusa um pedido de amizade
+mytown.cmd.outsider.friends.remove.help=Remove um amigo
+mytown.cmd.outsider.info.help=Dá informações sobre a cidade
+mytown.cmd.outsider.list.help=Lista todas as cidades
+mytown.cmd.outsider.map.help=Dá um mapa da reivindicação dos chunks próximos
+mytown.cmd.outsider.new.help=Cria uma nova cidade
+mytown.cmd.outsider.refuse.help=Recusa um convite de uma cidade
+mytown.cmd.outsider.help.help=Dá ajuda sobre os comandos
+mytown.cmd.outsider.invites.help=Mostra todos os convites das cidades
+mytown.cmd.mayor.pass.help=Passa a prefeitura para outra pessoa na cidade
+mytown.cmd.assistant.kick.help=Remove o habitante da cidade
+mytown.cmd.assistant.plot.limit.help=Limita quantos lotes um jogador pode ser dono
+mytown.cmd.assistant.plot.limit.set.help=Define quantos lotes um jogador pode ser dono
+mytown.cmd.assistant.plot.limit.show.help=mostra quantos lotes um jogador pode ser dono
+mytown.cmd.outsider.res.help=Mostra informações sobre os habitantes
+mytown.cmd.everyone.borders.help=Informações sobre as bordas da cidade
+mytown.cmd.everyone.borders.show.help=Mostra visualmente as bordas da cidade
+mytown.cmd.everyone.borders.hide.help=Oculta visualmente as bordas da cidade
+mytown.cmd.everyone.bank.help=Tudo relacionado ao dinheiro da cidade
+mytown.cmd.everyone.bank.pay.help=Dá dinheiro ao banco da cidade
+mytown.cmd.everyone.bank.info.help=Mostra informações sobre o banco da cidade
+mytown.cmd.everyone.wild.help=Mostra informações sobre a Natureza
+mytown.cmd.everyone.blocks.help=Mostra informações sobre os blocos reivindicados
+mytown.cmd.everyone.plot.sell.help=Coloca um lote à venda
+mytown.cmd.everyone.plot.remove.help=Remove membros ou donos de um lote
+mytown.cmd.mayor.leave.delete.help=Apaga uma cidade
+mytown.cmd.assistant.rename.help=Renomeia a cidade
+mytown.cmd.everyone.plot.new.help=Cria um novo lote
+mytown.cmd.everyone.wild.perm.help=Exibe as permissões na natureza
+mytown.cmd.assistant.bank.withdraw.help=Reitra dinheiro do banco para sua carteira
+mytown.cmd.assistant.ranks.reset.help=Redefine todos os postos para o estado inicial. Exclui todos os postos extras.
+mytown.cmd.outsider.syntax.help=Mostra a sintaxe de um comando
+mytown.cmd.outsider.prices.help=Mostra os precos de tudo no MyTown2
+mytown.cmd.everyone.bank.deposit.help=Deposita uma quantia no banco
+mytown.cmd.assistant.ranks.set.help=Define o tipo de um posto
+mytown.cmd.everyone.blocks.info.help=Mostra informações sobre os blocos da cidade
+
+mytown.adm.cmd.config.help=Tudo relacionado com as configurações
+mytown.adm.cmd.config.reload.help=Recarrega as configurações
+mytown.adm.cmd.add.help=Adiciona um jogador a uma cidade específica com um posto específico
+mytown.adm.cmd.delete.help=Apaga uma cidade
+mytown.adm.cmd.new.help=Cria uma cidade da administração
+mytown.adm.cmd.safemode.help=Deixa o servidor em modo de segurança
+mytown.adm.cmd.db.help=Tudo relacionado com o banco de dados
+mytown.adm.cmd.db.purge.help=Apaga tudo do banco de dados
+mytown.adm.cmd.db.reload.help=Recarrega tudo do banco de dados
+mytown.adm.cmd.perm.help=Todo relacionado às flags
+mytown.adm.cmd.perm.town.help=Tudo relacionado às flags de uma cidade
+mytown.adm.cmd.perm.town.list.help=Lista todas as flags de uma cidade junto com seus valores
+mytown.adm.cmd.perm.town.set.help=Altera uma flag da cidade
+mytown.adm.cmd.perm.town.toggle.help=Alterna uma flag da cidade
+mytown.adm.cmd.perm.town.whitelist.help=Faz com que um bloco/entidade ignore uma flag da cidade
+mytown.adm.cmd.perm.wild.help=Tudo relacionado com as flags da natureza
+mytown.adm.cmd.perm.wild.list.help=Lista todas as flags da natureza junto com seus valores
+mytown.adm.cmd.perm.wild.set.help=Altera uma flag da natureza
+mytown.adm.cmd.perm.wild.toggle.help=Alterna uma flag da natureza
+mytown.adm.cmd.claim.help=Reivindica um chunk para a cidade
+mytown.adm.cmd.unclaim.help=Remove um chunk reivindicado da cidade
+mytown.adm.cmd.help.help=Dá ajuda sobre os comandos administrativos
+mytown.adm.cmd.cost.help=Information about the cost item
+mytown.adm.cmd.cost.itemname.help=The name that can be used in config as the cost item
+mytown.adm.cmd.debug.help=Debug options and tools for protection making
+mytown.adm.cmd.debug.itemClass.help=Gives information about the class
+mytown.adm.cmd.res.help=Everything about a resident
+mytown.adm.cmd.res.blocks.help=Shows information about the blocks of a resident
+mytown.adm.cmd.res.blocks.extra.help=Shows information about the extra blocks of a resident
+mytown.adm.cmd.res.blocks.extra.set.help=Sets the extra amount of blocks for a resident
+mytown.adm.cmd.res.blocks.extra.add.help=Adds to the the extra amount of blocks for a resident
+mytown.adm.cmd.res.blocks.extra.remove.help=Subtracts from the extra amount of blocks for a resident
+mytown.adm.cmd.town.help=Everything about a town
+mytown.adm.cmd.blocks.help=Shows information about the blocks in a town
+mytown.adm.cmd.blocks.extra.help=Shows information about the extra blocks
+mytown.adm.cmd.blocks.extra.set.help=Sets the extra amount of blocks for a town
+mytown.adm.cmd.blocks.extra.add.help=Adds to the extra amount of blocks for a town
+mytown.adm.cmd.blocks.extra.remove.help=Subtracts from the extra amount of blocks for a town
+mytown.adm.cmd.blocks.farClaims.help=Shows information about the far claims
+mytown.adm.cmd.blocks.farClaims.set.help=Sets the extra far claims for a town
+mytown.adm.cmd.blocks.farClaims.add.help=Adds to the extra far claims of a town
+mytown.adm.cmd.blocks.farClaims.remove.help=Subtracts from the extra far claims of a town
+mytown.adm.cmd.debug.itemClass.help=Shows information about the class of the held item
+mytown.adm.cmd.borders.help=Information about borders of a town
+mytown.adm.cmd.borders.show.help=Visually shows the town borders
+mytown.adm.cmd.borders.hide.help=Visually hides all the town borders
+mytown.adm.cmd.plot.help=Everything related to plots
+mytown.adm.cmd.plot.show.help=Visually shows all plots in a town
+mytown.adm.cmd.plot.hide.help=Visually hides all plots
+mytown.adm.cmd.config.reload.help=Reloads all the config files, including protections
+mytown.adm.cmd.rename.help=Renames the town
+mytown.adm.cmd.debug.item.help=Shows class hierarchy information about the item
+mytown.adm.cmd.plot.add.help=Adds an owner/member to the plot
+mytown.adm.cmd.plot.rename.help=Renames the plot
+mytown.adm.cmd.plot.info.help=Shows info about the plot
+mytown.adm.cmd.plot.remove.help=Removes an owner/member from the plot
+mytown.adm.cmd.plot.delete.help=Deletes the plot
+mytown.adm.cmd.plot.add.owner.help=Adds a player with owner permissions to the plot
+mytown.adm.cmd.plot.add.member.help=Adds a player with normal permissions to the plot
+mytown.adm.cmd.plot.perm.help=Everything related to plot flags
+mytown.adm.cmd.plot.perm.set.help=Sets a plot's flag
+mytown.adm.cmd.plot.perm.toggle.help=Toggles a plot's flag
+mytown.adm.cmd.plot.perm.list.help=Shows all the flags and their current values of a plot
+mytown.adm.cmd.ranks.help=Everything related to ranks
+mytown.adm.cmd.ranks.reset.help=Resets the ranks in a town to their default settings
+mytown.adm.cmd.ranks.add.help=Adds a rank to the town
+mytown.adm.cmd.ranks.perm.help=Everything related to perm nodes in a rank
+mytown.adm.cmd.ranks.perm.list.help=Lists the perm nodes in a rank
+mytown.adm.cmd.ranks.perm.remove.help=Removes a perm node from a rank
+mytown.adm.cmd.ranks.perm.add.help=Adds a perm node to a rank
+mytown.adm.cmd.ranks.set.help=Sets the type of a rank
+mytown.adm.cmd.ranks.remove.help=Removes a rank from a town
+mytown.adm.cmd.kick.help=Removes a player from a town
+mytown.adm.cmd.syntax.help=Shows the syntax of a command
+mytown.adm.cmd.blocks.far.help=Everything related to far claims in a town
+mytown.adm.cmd.blocks.far.add.help=Adds to the extra amount of far claims a town can have
+mytown.adm.cmd.blocks.far.remove.help=Removes from the extra amount of far claims a town can have
+mytown.adm.cmd.blocks.far.set.help=Sets the extra amount of far claims a town can have
+mytown.adm.cmd.config.reset.help=Resets a config to its default state (same as deleting and restarting the server)
+mytown.adm.cmd.config.reset.wildPerms.help=Resets the WildPerms.json file
+mytown.adm.cmd.config.reset.defaultRanks.help=Resets the DefaultTownRanks.json file
+mytown.adm.cmd.config.reset.defaultFlags.help=Resets the DefaultFlags.json file
+mytown.adm.cmd.spawn.help=Teleports the player to town's spawn
+mytown.adm.cmd.update.help=Everything related to updating information in database
+mytown.adm.cmd.update.ranks.help=Updates all the ranks in all the towns
+mytown.adm.cmd.blocks.info.help=Shows information about the townblocks
