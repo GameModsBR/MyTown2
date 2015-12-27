@@ -105,7 +105,6 @@ mytown.notification.nation.deleted=A nação %s foi apagada
 # /t invite
 mytown.cmd.err.invite.already=&cO(a) habitante %s já existe na cidade %s
 mytown.cmd.err.invite.noinvitations=&cVocê não tem convites
-mytown.cmd.err.resident.notexist=&cO jogador não existe
 mytown.cmd.err.invite.accept=&cVocê tem mais de um convite! &3Escolha qual convite você quer aceitar: "/t accept <nomeDaCidade>"
 mytown.cmd.err.invite.refuse=&cVocê tem mais de um convite! &3Escolha qual convite você quer recusar: "/t refuse <nomeDaCidade>"
 
@@ -190,7 +189,6 @@ mytown.cmd.err.perm.valueNotValid=&cValor inválido
 mytown.cmd.err.flag.unconfigurable=&cEsta flag não pode ser alterada
 mytown.cmd.err.flag.notForWhitelist=&cThe flag you selected is not allowed on block whitelist
 mytown.cmd.err.flag.list=&cNão há flags nesta cidade
-mytown.cmd.err.perm.valueNotValid=&cValor inválido
 mytown.cmd.err.perm.whitelist.noPermssion=&cYou do not have permission to whitelist this!
 
 # /t promote
@@ -419,7 +417,6 @@ mytown.cmd.assistant.ranks.set.help=Define o tipo de um posto
 mytown.cmd.everyone.blocks.info.help=Mostra informações sobre os blocos da cidade
 
 mytown.adm.cmd.config.help=Tudo relacionado com as configurações
-mytown.adm.cmd.config.reload.help=Recarrega as configurações
 mytown.adm.cmd.add.help=Adiciona um jogador a uma cidade específica com um posto específico
 mytown.adm.cmd.delete.help=Apaga uma cidade
 mytown.adm.cmd.new.help=Cria uma cidade da administração
@@ -443,7 +440,6 @@ mytown.adm.cmd.help.help=Dá ajuda sobre os comandos administrativos
 mytown.adm.cmd.cost.help=Information about the cost item
 mytown.adm.cmd.cost.itemname.help=The name that can be used in config as the cost item
 mytown.adm.cmd.debug.help=Debug options and tools for protection making
-mytown.adm.cmd.debug.itemClass.help=Gives information about the class
 mytown.adm.cmd.res.help=Everything about a resident
 mytown.adm.cmd.res.blocks.help=Shows information about the blocks of a resident
 mytown.adm.cmd.res.blocks.extra.help=Shows information about the extra blocks of a resident
@@ -460,14 +456,14 @@ mytown.adm.cmd.blocks.farClaims.help=Shows information about the far claims
 mytown.adm.cmd.blocks.farClaims.set.help=Sets the extra far claims for a town
 mytown.adm.cmd.blocks.farClaims.add.help=Adds to the extra far claims of a town
 mytown.adm.cmd.blocks.farClaims.remove.help=Subtracts from the extra far claims of a town
-mytown.adm.cmd.debug.itemClass.help=Shows information about the class of the held item
+mytown.adm.cmd.debug.itemClass.help=Exibe informações sobre a classe do item em suas mãos
 mytown.adm.cmd.borders.help=Information about borders of a town
 mytown.adm.cmd.borders.show.help=Visually shows the town borders
 mytown.adm.cmd.borders.hide.help=Visually hides all the town borders
 mytown.adm.cmd.plot.help=Everything related to plots
 mytown.adm.cmd.plot.show.help=Visually shows all plots in a town
 mytown.adm.cmd.plot.hide.help=Visually hides all plots
-mytown.adm.cmd.config.reload.help=Reloads all the config files, including protections
+mytown.adm.cmd.config.reload.help=Recarrega todos os arquivos de configurações, incluindo as proteções
 mytown.adm.cmd.rename.help=Renames the town
 mytown.adm.cmd.debug.item.help=Shows class hierarchy information about the item
 mytown.adm.cmd.plot.add.help=Adds an owner/member to the plot
