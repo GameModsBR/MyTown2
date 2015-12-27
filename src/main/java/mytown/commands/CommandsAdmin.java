@@ -694,8 +694,15 @@ public class CommandsAdmin extends Commands {
             return CommandResponse.SEND_SYNTAX;
         }
 
-        Town town = getTownFromName(args.get(0));
-        getDatasource().resetRanks(town);
+        if(args.get(0).equals("*")) {
+            for(Town town: MyTownUniverse.instance.towns) {
+                getDatasource().resetRanks(town);
+            }
+        }
+        else {
+            Town town = getTownFromName(args.get(0));
+            getDatasource().resetRanks(town);
+        }
         sendMessageBackToSender(sender, getLocal().getLocalization("mytown.notification.ranks.reset"));
 
         return CommandResponse.DONE;
