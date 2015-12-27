@@ -96,12 +96,12 @@ public class Rank {
         /**
          * Rank that is assigned to players on joining the town
          */
-        DEFAULT(EnumChatFormatting.GREEN.toString(), true),
+        DEFAULT(EnumChatFormatting.WHITE.toString(), true),
 
         /**
          * Nothing special to this rank
          */
-        REGULAR(EnumChatFormatting.WHITE.toString(), false);
+        REGULAR(EnumChatFormatting.GREEN.toString(), false);
 
         public final String color;
         public final boolean unique;
