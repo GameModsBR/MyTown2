@@ -432,6 +432,9 @@ public class CommandsAssistant extends Commands {
 
             for(Rank defaultRank : Rank.defaultRanks) {
                 Rank rank = town.ranksContainer.get(defaultRank.getName());
+                if(rank == null) {
+                    continue;
+                }
 
                 rank.permissionsContainer.clear();
                 rank.permissionsContainer.addAll(defaultRank.permissionsContainer);
