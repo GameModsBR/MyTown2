@@ -198,7 +198,7 @@ public class CommandsAssistant extends Commands {
         Town town = getTownFromResident(res);
         Flag flag = getFlagFromName(town.flagsContainer, args.get(0));
 
-        if (!flag.flagType.configurable) {
+        if (!flag.flagType.configurable || !town.hasPermission(res, "mytown.flag.toggle."+flag.flagType.name.toLowerCase())) {
             throw new MyTownCommandException("mytown.cmd.err.flag.unconfigurable", args.get(0));
         } else {
             if (flag.setValue(args.get(1))) {
@@ -225,7 +225,7 @@ public class CommandsAssistant extends Commands {
         Town town = getTownFromResident(res);
         Flag flag = getFlagFromName(town.flagsContainer, args.get(0));
 
-        if (!flag.flagType.configurable) {
+        if (!flag.flagType.configurable || !town.hasPermission(res, "mytown.flag.toggle."+flag.flagType.name.toLowerCase())) {
             throw new MyTownCommandException("mytown.cmd.err.flag.unconfigurable", args.get(0));
         } else {
             if (flag.toggle()) {
