@@ -230,7 +230,7 @@ public class CommandsEveryone extends Commands {
                 name = "toggle",
                 permission = "mytown.cmd.everyone.plot.perm.toggle",
                 parentName = "mytown.cmd.everyone.plot.perm",
-                syntax = "/town plot perm set <flag>",
+                syntax = "/town plot perm toggle <flag>",
                 completionKeys = {"flagCompletion"})
         public static CommandResponse plotPermToggleCommand(ICommandSender sender, List<String> args) {
             if (args.size() < 1) {
