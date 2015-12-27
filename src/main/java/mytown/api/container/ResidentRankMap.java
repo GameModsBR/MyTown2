@@ -44,7 +44,7 @@ public class ResidentRankMap extends HashMap<Resident, Rank> {
         String formattedList = null;
 
         for (Map.Entry<Resident, Rank> entry : entrySet()) {
-            String toAdd = ColorUtils.colorPlayer + entry.getKey().getPlayerName() + ColorUtils.colorComma + " (" + entry.getValue().toString() + ColorUtils.colorComma + ")";
+            String toAdd = ColorUtils.colorPlayer + entry.getKey().getPlayerName() + ColorUtils.colorComma + " (" + String.valueOf(entry.getValue()) + ColorUtils.colorComma + ")";
             if (formattedList == null) {
                 formattedList = toAdd;
             } else {
