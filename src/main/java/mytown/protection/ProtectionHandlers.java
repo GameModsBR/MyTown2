@@ -13,6 +13,8 @@ import myessentials.event.BlockTrampleEvent;
 import myessentials.event.ModifyBiomeEvent;
 import myessentials.event.ModifyBlockEvent;
 import myessentials.event.ProjectileImpactEvent;
+import myessentials.event.LiquidFlowEvent;
+import myessentials.event.LiquidReplaceBlockEvent;
 import mytown.MyTown;
 import mytown.new_datasource.MyTownUniverse;
 import mytown.config.Config;
@@ -425,6 +427,86 @@ public class ProtectionHandlers {
             Resident res = MyTownUniverse.instance.getOrMakeResident(ev.entityPlayer);
             if(!ProtectionManager.hasPermission(res, FlagType.USAGE, ev.world.provider.dimensionId, x, y, z)) {
                 ev.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onLiquidFlow(LiquidFlowEvent ev) {
+        if(ev.world.isRemote || ev.isCanceled()) {
+            return;
+        }
+
+        if(onAnyLiquidChange(ev.world.provider.dimensionId, ev.x, ev.y, ev.z, ev.toX, ev.toY, ev.toZ))
+            ev.setCanceled(true);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onLiquidReplaceBlock(LiquidReplaceBlockEvent ev) {
+        if(ev.world.isRemote || ev.isCanceled()) {
+            return;
+        }
+
+        if(onAnyLiquidChange(ev.world.provider.dimensionId, ev.x, ev.y, ev.z, ev.replacedX, ev.replacedY, ev.replacedZ))
+            ev.setCanceled(true);
+    }
+
+    public boolean onAnyLiquidChange(int dim, int x, int y, int z, int toX, int toY, int toZ){
+        TownBlock toTownBlock = MyTownUniverse.instance.blocks.get(dim, toX >> 4, toZ >> 4);
+        Town toTown = toTownBlock == null? null : toTownBlock.getTown();
+        Plot toPlot = toTown == null? null : toTown.plotsContainer.get(dim, toX, toY, toZ);
+
+        TownBlock fromTownBlock = MyTownUniverse.instance.blocks.get(dim, x >> 4, z >> 4);
+        Town fromTown = fromTownBlock == null? null : fromTownBlock.getTown();
+        Plot fromPlot = fromTown == null? null : fromTown.plotsContainer.get(dim, x, y, z);
+
+        if(toTown == null && fromTown == null || toPlot != null && fromPlot == toPlot) {
+            // System.out.println("Allowed, toTown==null && fromTown == null || toPlot != null && fromPlot == toPlot");
+            return false;
+        }
+
+        //System.out.println("\n\nFrom: "+x+" "+y+" "+z+" "+fromTownBlock+" "+fromTown+" "+fromPlot+"\n" +
+        //        "To  : "+toX+" "+toY+" "+toZ+" "+toTownBlock+" "+toTown+" "+toPlot);
+
+        if(toTown != null) {
+            if(toPlot != null) {
+                if(toPlot.flagsContainer.getValue(FlagType.MODIFY)) {
+                    //System.out.println("Allowed, toPlot allows modify");
+                    return false;
+                }
+
+                //System.out.println("Denied, toTown doesn't allows modify");
+                return true;
+            }
+
+            if(toTown.flagsContainer.getValue(FlagType.MODIFY)) {
+                //System.out.println("Allowed, toTown allows modify");
+                return false;
+            }
+
+            if(fromTown != toTown) {
+                //System.out.println("Denied, fromTown != toTown");
+                return true;
+            }
+            else {
+                if(fromPlot != null) {
+                    //System.out.println("Denied, fromPlot != toPlot");
+                    return true;
+                }
+
+                //System.out.println("Allowed, fromTown == toTown");
+                return false;
+            }
+        }
+        else {
+            //noinspection RedundantIfStatement All this ifs can be simplified in a giant line that is hard to understand
+            if(Wild.instance.flagsContainer.getValue(FlagType.MODIFY)) {
+                //System.out.println("Allowed, wild allows modify");
+                return false;
+            }
+            else {
+                //System.out.println("Denied, wild doesn't allows modify");
+                return true;
             }
         }
     }
