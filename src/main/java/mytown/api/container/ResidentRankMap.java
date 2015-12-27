@@ -32,7 +32,9 @@ public class ResidentRankMap extends HashMap<Resident, Rank> {
 
     public Resident getMayor() {
         for(Map.Entry<Resident, Rank> entry : entrySet()) {
-            if(entry.getValue().getType() == Rank.Type.MAYOR) {
+            Rank rank = entry.getValue();
+            if(rank == null) continue;
+            if(rank.getType() == Rank.Type.MAYOR) {
                 return entry.getKey();
             }
         }
