@@ -82,6 +82,28 @@ public abstract class Segment {
         }
     }
 
+    protected boolean hasPermissionAtLocationExcluding(Resident res, int dim, int x, int y, int z, FlagType... exclusion){
+        List<FlagType> exclusionList = Arrays.asList(exclusion);
+        for(FlagType<Boolean> flagType : flags) {
+            if(exclusionList.contains(flagType)) continue;
+            if(!ProtectionManager.hasPermission(res, flagType, dim, x, y, z)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected boolean hasPermissionAtLocationExcluding(Resident res, int dim, Volume volume, FlagType... exclusion) {
+        List<FlagType> exclusionList = Arrays.asList(exclusion);
+        for (FlagType<Boolean> flagType : flags) {
+            if(exclusionList.contains(flagType)) continue;
+            if(!ProtectionManager.hasPermission(res, flagType, dim, volume)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected boolean hasPermissionAtLocation(Resident res, int dim, int x, int y, int z) {
         for(FlagType<Boolean> flagType : flags) {
             if(!ProtectionManager.hasPermission(res, flagType, dim, x, y, z)) {
