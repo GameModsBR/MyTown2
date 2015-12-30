@@ -69,33 +69,39 @@ public class SegmentEntity extends Segment {
         final boolean pvp = flags.contains(FlagType.PVP);
         final boolean pve = flags.contains(FlagType.PVE);
 
-        @SuppressWarnings("unchecked")
-        List<Entity> permissionFailedEntities = !pve && !pvp? null : entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity,
-                AxisAlignedBB.getBoundingBox(mop.hitVec.xCoord-range, mop.hitVec.yCoord-range, mop.hitVec.zCoord-range, mop.hitVec.xCoord+range, mop.hitVec.yCoord+range, mop.hitVec.zCoord+range),
-                new IEntitySelector() {
-                    @Override
-                    public boolean isEntityApplicable(Entity entity) {
-                        if(entity instanceof EntityPlayer) {
-                            if(!pvp) return false;
-                            return !entity.getPersistentID().equals(owner.getUUID())
-                                    && !ProtectionManager.hasPermission(owner, FlagType.PVP, entity.worldObj.provider.dimensionId, (int)entity.posX, (int)entity.posY, (int)entity.posZ);
-                        }
-
-                        if(entity instanceof EntityLivingBase) {
-                            if(!pve) return false;
-                            for(SegmentEntity segmentEntity: ProtectionManager.segmentsEntity.get(entity.getClass())) {
-                                if(!segmentEntity.shouldInteract(entity, owner))
-                                    return true;
-                            }
-                            return false;
-                        }
-
-                        return false;
-                    }
+        IEntitySelector selector = new IEntitySelector() {
+            @Override
+            public boolean isEntityApplicable(Entity entity) {
+                if(entity instanceof EntityPlayer) {
+                    if(!pvp) return false;
+                    return !entity.getPersistentID().equals(owner.getUUID())
+                            && !ProtectionManager.hasPermission(owner, FlagType.PVP, entity.worldObj.provider.dimensionId, (int)entity.posX, (int)entity.posY, (int)entity.posZ);
                 }
-        );
 
-        if(permissionFailedEntities != null && !permissionFailedEntities.isEmpty())
+                if(entity instanceof EntityLivingBase) {
+                    if(!pve) return false;
+                    for(SegmentEntity segmentEntity: ProtectionManager.segmentsEntity.get(entity.getClass())) {
+                        if(!segmentEntity.shouldInteract(entity, owner))
+                            return true;
+                    }
+                    return false;
+                }
+
+                return false;
+            }
+        };
+
+        if(range > 0) {
+            @SuppressWarnings("unchecked")
+            List<Entity> permissionFailedEntities = !pve && !pvp? null : entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity,
+                    AxisAlignedBB.getBoundingBox(mop.hitVec.xCoord-range, mop.hitVec.yCoord-range, mop.hitVec.zCoord-range, mop.hitVec.xCoord+range, mop.hitVec.yCoord+range, mop.hitVec.zCoord+range),
+                    selector
+            );
+
+            if(permissionFailedEntities != null && !permissionFailedEntities.isEmpty() && selector.isEntityApplicable(mop.entityHit))
+                return false;
+        }
+        else if(selector.isEntityApplicable(mop.entityHit))
             return false;
 
         if(range == 0) {
