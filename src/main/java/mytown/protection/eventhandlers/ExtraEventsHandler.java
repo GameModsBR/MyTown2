@@ -2,13 +2,23 @@ package mytown.protection.eventhandlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import myessentials.utils.WorldUtils;
+import mytown.entities.Resident;
 import mytown.new_datasource.MyTownUniverse;
 import mytown.entities.TownBlock;
 import mytown.entities.Wild;
 import mytown.entities.flag.FlagType;
 import myessentials.entities.ChunkPos;
+import mytown.protection.ProtectionManager;
+import mytown.protection.segment.SegmentEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,6 +55,99 @@ public class ExtraEventsHandler {
                     ev.setCanceled(true);
                     block.getTown().notifyEveryone(FlagType.EXPLOSIONS.getLocalizedTownNotification());
                     return;
+                }
+            }
+        }
+
+        if(ev.explosion.exploder == null){
+            @SuppressWarnings("unchecked")
+            List<Entity> list = ev.world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(
+                    ev.explosion.explosionX-0.5, ev.explosion.explosionY-0.5, ev.explosion.explosionZ-0.5,
+                    ev.explosion.explosionX+0.5, ev.explosion.explosionY+0.5, ev.explosion.explosionZ+0.5
+            ));
+
+            if(list.size() == 1)
+                ev.explosion.exploder = list.get(0);
+            else {
+                double distance = Double.MAX_VALUE;
+                Entity closest = null;
+
+                for(Entity e: list){
+                    double d = e.getDistanceSq(ev.explosion.explosionX, ev.explosion.explosionY, ev.explosion.explosionZ);
+                    if(d < distance){
+                        distance = d;
+                        closest = e;
+                        if(distance == 0)
+                            break;
+                    }
+                }
+
+                ev.explosion.exploder = closest;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onDetonate(ExplosionEvent.Detonate ev) {
+        if(ev.world.isRemote || ev.isCanceled())
+            return;
+
+        Resident exploder = ev.explosion.exploder == null? null : (ev.explosion.exploder instanceof EntityPlayer)?
+                MyTownUniverse.instance.getOrMakeResident(ev.explosion.exploder):
+                ProtectionManager.getOwner(ev.explosion.exploder);
+
+        boolean skipPlayerCheck = false;
+        if(exploder == null && ev.explosion.exploder instanceof EntityCreature){
+            EntityCreature creature = (EntityCreature) ev.explosion.exploder;
+            Entity target = creature.getAttackTarget();
+            exploder = target == null? null : (target instanceof EntityPlayer)?
+                    MyTownUniverse.instance.getOrMakeResident(target):
+                    ProtectionManager.getOwner(target);
+            skipPlayerCheck = true;
+        }
+
+        Iterator<ChunkPosition> blockIterator = ev.getAffectedBlocks().iterator();
+        int dimensionId = ev.world.provider.dimensionId;
+        boolean silent = false;
+        while (blockIterator.hasNext()){
+            ChunkPosition pos = blockIterator.next();
+            if(exploder == null){
+                if(ProtectionManager.getFlagValueAtLocation(FlagType.MODIFY, dimensionId, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ) == Boolean.FALSE)
+                    blockIterator.remove();
+            }
+            else if(!ProtectionManager.hasPermission(exploder, FlagType.MODIFY, dimensionId, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, silent)){
+                blockIterator.remove();
+                silent = true;
+            }
+        }
+
+        if(exploder == null)
+            skipPlayerCheck = true;
+
+        boolean silentPvP = false;
+        boolean silentPvE = false;
+        Iterator<Entity> entityIterator = ev.getAffectedEntities().iterator();
+        while (entityIterator.hasNext()){
+            Entity entity = entityIterator.next();
+            if(entity instanceof EntityPlayer) {
+                if(!skipPlayerCheck && !entity.getPersistentID().equals(exploder.getUUID())
+                        && !ProtectionManager.hasPermission(exploder, FlagType.PVP, dimensionId, (int)entity.posX, (int)entity.posY, (int)entity.posZ, silentPvP)) {
+                    entityIterator.remove();
+                    silentPvP = true;
+                }
+            }
+            else if(exploder == null)
+                entityIterator.remove();
+            else {
+                for (SegmentEntity segment: ProtectionManager.segmentsEntity.get(entity.getClass())){
+                    if(!segment.shouldAttack(entity, exploder)){
+                        entityIterator.remove();
+                        if(!silentPvE){
+                            exploder.protectionDenial(FlagType.PVE);
+                            silentPvE = true;
+                        }
+                        break;
+                    }
                 }
             }
         }
