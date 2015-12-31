@@ -262,6 +262,10 @@ public class ProtectionManager {
     }
 
     public static boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, Volume volume) {
+        return hasPermission(res, flagType, dim, volume, false);
+    }
+
+    public static boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, Volume volume, boolean silent) {
         boolean inWild = false;
 
         for (int townBlockX = volume.getMinX() >> 4; townBlockX <= volume.getMaxX() >> 4; townBlockX++) {
@@ -284,7 +288,7 @@ public class ProtectionManager {
                     for (Plot plot : townBlock.plotsContainer) {
                         Volume plotIntersection = rangeBox.intersect(plot.toVolume());
                         if (plotIntersection != null) {
-                            if(!plot.hasPermission(res, flagType)) {
+                            if(!plot.hasPermission(res, flagType, silent)) {
                                 return false;
                             }
                             totalIntersectArea += plotIntersection.getVolumeAmount();
@@ -293,7 +297,7 @@ public class ProtectionManager {
 
                     // If plot area sum is not equal to range area, check town permission
                     if (totalIntersectArea != rangeBox.getVolumeAmount()) {
-                        if(!town.hasPermission(res, flagType)) {
+                        if(!town.hasPermission(res, flagType, silent)) {
                             return false;
                         }
                     }

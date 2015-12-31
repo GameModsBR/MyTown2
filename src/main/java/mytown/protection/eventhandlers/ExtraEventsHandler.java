@@ -1,18 +1,19 @@
 package mytown.protection.eventhandlers;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import myessentials.entities.ChunkPos;
+import myessentials.entities.Volume;
 import myessentials.utils.WorldUtils;
+import mytown.config.Config;
 import mytown.entities.Resident;
-import mytown.new_datasource.MyTownUniverse;
 import mytown.entities.TownBlock;
 import mytown.entities.Wild;
 import mytown.entities.flag.FlagType;
-import myessentials.entities.ChunkPos;
+import mytown.new_datasource.MyTownUniverse;
 import mytown.protection.ProtectionManager;
 import mytown.protection.segment.SegmentEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.ChunkPosition;
@@ -127,6 +128,15 @@ public class ExtraEventsHandler {
             else if(!ProtectionManager.hasPermission(exploder, FlagType.MODIFY, dimensionId, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, silent)){
                 blockIterator.remove();
                 silent = true;
+            }
+            else {
+                int range = Config.instance.placeProtectionRange.get();
+                Volume breakBox = new Volume(pos.chunkPosX-range, pos.chunkPosY-range, pos.chunkPosZ-range, pos.chunkPosX+range, pos.chunkPosY+range, pos.chunkPosZ+range);
+
+                if(!ProtectionManager.hasPermission(exploder, FlagType.MODIFY, ev.world.provider.dimensionId, breakBox, silent)) {
+                    blockIterator.remove();
+                    silent = true;
+                }
             }
         }
 
