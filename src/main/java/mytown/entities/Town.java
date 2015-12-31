@@ -57,24 +57,32 @@ public class Town implements Comparable<Town> {
         }
     }
 
+    public boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, int x, int y, int z) {
+        return hasPermission(res, flagType, dim, x, y, z, false);
+    }
+
     /**
      * Checks if the Resident is allowed to do the action specified by the FlagType at the coordinates given.
      * This method will go through all the plots and prioritize the plot's flags over town flags.
      */
-    public boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, int x, int y, int z) {
+    public boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, int x, int y, int z, boolean silent) {
         Plot plot = plotsContainer.get(dim, x, y, z);
 
         if (plot == null) {
-            return hasPermission(res, flagType);
+            return hasPermission(res, flagType, silent);
         } else {
-        	return plot.hasPermission(res, flagType);
+        	return plot.hasPermission(res, flagType, silent);
         }
+    }
+
+    public boolean hasPermission(Resident res, FlagType<Boolean> flagType) {
+        return hasPermission(res, flagType, false);
     }
 
     /**
      * Checks if the Resident is allowed to do the action specified by the FlagType in this town.
      */
-    public boolean hasPermission(Resident res, FlagType<Boolean> flagType) {
+    public boolean hasPermission(Resident res, FlagType<Boolean> flagType, boolean silent) {
         if(flagType.configurable ? flagsContainer.getValue(flagType) : flagType.defaultValue) {
             return true;
         }
@@ -92,7 +100,8 @@ public class Town implements Comparable<Town> {
                 permissionBypass = PermissionProxy.getPermissionManager().hasPermission(res.getUUID(), FlagType.RESTRICTIONS.getBypassPermission());
 
                 if (!rankBypass && !permissionBypass) {
-                    res.protectionDenial(FlagType.RESTRICTIONS, formatOwner());
+                    if (!silent)
+                        res.protectionDenial(FlagType.RESTRICTIONS, formatOwner());
                     return false;
                 }
             }
@@ -101,16 +110,19 @@ public class Town implements Comparable<Town> {
             permissionBypass = PermissionProxy.getPermissionManager().hasPermission(res.getUUID(), flagType.getBypassPermission());
 
             if (!rankBypass && !permissionBypass) {
-                res.protectionDenial(flagType, formatOwner());
+                if (!silent)
+                    res.protectionDenial(flagType, formatOwner());
                 return false;
             }
 
         } else {
             permissionBypass = PermissionProxy.getPermissionManager().hasPermission(res.getUUID(), flagType.getBypassPermission());
 
-            if (!permissionBypass) {
-                res.protectionDenial(flagType, formatOwner());
-                return false;
+                if (!permissionBypass) {
+                    if (!silent)
+                        res.protectionDenial(flagType, formatOwner());
+                    return false;
+                }
             }
         }
 

@@ -64,6 +64,10 @@ public class Plot {
     }
 
     public boolean hasPermission(Resident res, FlagType<Boolean> flagType) {
+        return hasPermission(res, flagType, false);
+    }
+
+    public boolean hasPermission(Resident res, FlagType<Boolean> flagType, boolean silent) {
         if(flagType.configurable ? flagsContainer.getValue(flagType) : flagType.defaultValue) {
             return true;
         }

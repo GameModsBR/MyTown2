@@ -83,6 +83,28 @@ public abstract class Segment {
         }
     }
 
+    protected boolean hasPermissionAtLocationExcluding(Resident res, int dim, int x, int y, int z, FlagType... exclusion){
+        List<FlagType> exclusionList = Arrays.asList(exclusion);
+        for(FlagType<Boolean> flagType : flags) {
+            if(exclusionList.contains(flagType)) continue;
+            if(!ProtectionManager.hasPermission(res, flagType, dim, x, y, z)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected boolean hasPermissionAtLocationExcluding(Resident res, int dim, Volume volume, FlagType... exclusion) {
+        List<FlagType> exclusionList = Arrays.asList(exclusion);
+        for (FlagType<Boolean> flagType : flags) {
+            if(exclusionList.contains(flagType)) continue;
+            if(!ProtectionManager.hasPermission(res, flagType, dim, volume)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected boolean hasPermissionAtLocation(Resident res, int dim, int x, int y, int z) {
         if (res != null && res.getFakePlayer()) {
             if(!ProtectionManager.hasPermission(res, FlagType.FAKERS, dim, x, y, z)) {
@@ -232,6 +254,14 @@ public abstract class Segment {
                 jsonUpdate.add("coords", context.serialize(segment.clientUpdate.relativeCoords));
                 jsonUpdate.addProperty("directional", segment.directionalClientUpdate);
                 json.add("clientUpdate", jsonUpdate);
+            }
+            if(segment.inventoryUpdate != null) {
+                JsonObject jsonUpdate = new JsonObject();
+                if(segment.inventoryUpdate.getMode() == 2)
+                    jsonUpdate.addProperty("hand", true);
+                else if(segment.inventoryUpdate.getMode() == 1)
+                    jsonUpdate.addProperty("full", true);
+                json.add("inventoryUpdate", jsonUpdate);
             }
         }
 
@@ -389,6 +419,14 @@ public abstract class Segment {
                     segment.directionalClientUpdate = jsonClientUpdate.get("directional").getAsBoolean();
                 }
                 json.remove("clientUpdate");
+            }
+
+            if(json.has("inventoryUpdate")) {
+                JsonObject jsonItemUpdate = json.get("inventoryUpdate").getAsJsonObject();
+                int mode = jsonItemUpdate.get("hand").getAsBoolean()? 2 : jsonItemUpdate.get("full").getAsBoolean()? 1 : 0;
+                if(mode > 0)
+                    segment.inventoryUpdate = new ClientInventoryUpdate(mode);
+                json.remove("inventoryUpdate");
             }
 
             return segment;

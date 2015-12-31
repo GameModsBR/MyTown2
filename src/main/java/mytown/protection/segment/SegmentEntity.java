@@ -5,8 +5,11 @@ import mytown.entities.Resident;
 import mytown.entities.flag.FlagType;
 import mytown.protection.ProtectionManager;
 import mytown.protection.segment.enums.EntityType;
+import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class SegmentEntity extends Segment {
         return true;
     }
 
-    public boolean shouldImpact(Entity entity, Resident owner, MovingObjectPosition mop) {
+    public boolean shouldImpact(Entity entity, final Resident owner, MovingObjectPosition mop) {
         if(!types.contains(EntityType.IMPACT)) {
             return true;
         }
@@ -63,13 +66,51 @@ public class SegmentEntity extends Segment {
         int y = (int) Math.floor(mop.hitVec.yCoord);
         int z = (int) Math.floor(mop.hitVec.zCoord);
 
+        final boolean pvp = flags.contains(FlagType.PVP);
+        final boolean pve = flags.contains(FlagType.PVE);
+
+        IEntitySelector selector = new IEntitySelector() {
+            @Override
+            public boolean isEntityApplicable(Entity entity) {
+                if(entity instanceof EntityPlayer) {
+                    if(!pvp) return false;
+                    return !entity.getPersistentID().equals(owner.getUUID())
+                            && !ProtectionManager.hasPermission(owner, FlagType.PVP, entity.worldObj.provider.dimensionId, (int)entity.posX, (int)entity.posY, (int)entity.posZ);
+                }
+
+                if(entity instanceof EntityLivingBase) {
+                    if(!pve) return false;
+                    for(SegmentEntity segmentEntity: ProtectionManager.segmentsEntity.get(entity.getClass())) {
+                        if(!segmentEntity.shouldInteract(entity, owner))
+                            return true;
+                    }
+                    return false;
+                }
+
+                return false;
+            }
+        };
+
+        if(range > 0) {
+            @SuppressWarnings("unchecked")
+            List<Entity> permissionFailedEntities = !pve && !pvp? null : entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity,
+                    AxisAlignedBB.getBoundingBox(mop.hitVec.xCoord-range, mop.hitVec.yCoord-range, mop.hitVec.zCoord-range, mop.hitVec.xCoord+range, mop.hitVec.yCoord+range, mop.hitVec.zCoord+range),
+                    selector
+            );
+
+            if(permissionFailedEntities != null && !permissionFailedEntities.isEmpty() || selector.isEntityApplicable(mop.entityHit))
+                return false;
+        }
+        else if(selector.isEntityApplicable(mop.entityHit))
+            return false;
+
         if(range == 0) {
-            if (!hasPermissionAtLocation(owner, dim, x, y, z)) {
+            if (!hasPermissionAtLocationExcluding(owner, dim, x, y, z, FlagType.PVP, FlagType.PVE)) {
                 return false;
             }
         } else {
             Volume rangeBox = new Volume(x-range, y-range, z-range, x+range, y+range, z+range);
-            if (!hasPermissionAtLocation(owner, dim, rangeBox)) {
+            if (!hasPermissionAtLocationExcluding(owner, dim, rangeBox, FlagType.PVP, FlagType.PVE)) {
                 return false;
             }
         }
