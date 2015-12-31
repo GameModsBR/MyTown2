@@ -1,7 +1,6 @@
 package mytown.entities.flag;
 
 import com.google.gson.*;
-
 import myessentials.json.SerializerTemplate;
 import myessentials.utils.ColorUtils;
 import mytown.entities.Town;
@@ -132,7 +131,7 @@ public class Flag<T> implements Comparable<Flag>{
         public <T> T getValue(FlagType<T> flagType) {
             for (Flag flag : this) {
                 if (flag.flagType == flagType) {
-                    return (T)flag.value;
+                    return flag.configurable? (T)flag.value : (T) flag.flagType.defaultValue;
                 }
             }
             return null;
