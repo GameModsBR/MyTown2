@@ -86,7 +86,9 @@ public class Plot {
 
         boolean permissionBypass = PermissionProxy.getPermissionManager().hasPermission(res.getUUID(), flagType.getBypassPermission());
         if(!permissionBypass) {
-            res.protectionDenial(flagType, ownersContainer.toString());
+            if (!silent) {
+                res.protectionDenial(flagType, ownersContainer.toString());
+            }
             return false;
         }
 
