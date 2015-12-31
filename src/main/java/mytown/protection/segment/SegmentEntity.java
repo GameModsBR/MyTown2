@@ -74,6 +74,7 @@ public class SegmentEntity extends Segment {
             public boolean isEntityApplicable(Entity entity) {
                 if(entity instanceof EntityPlayer) {
                     if(!pvp) return false;
+                    if(owner == null) return false;
                     return !entity.getPersistentID().equals(owner.getUUID())
                             && !ProtectionManager.hasPermission(owner, FlagType.PVP, entity.worldObj.provider.dimensionId, (int)entity.posX, (int)entity.posY, (int)entity.posZ);
                 }
