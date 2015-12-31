@@ -6,7 +6,7 @@ import myessentials.utils.PlayerUtils;
 import mypermissions.api.entities.PermissionLevel;
 import mypermissions.proxies.PermissionProxy;
 import mytown.MyTown;
-import mytown.api.container.*;
+import mytown.api.container.ResidentRankMap;
 import mytown.config.Config;
 import mytown.entities.flag.Flag;
 import mytown.entities.flag.FlagType;
@@ -118,11 +118,10 @@ public class Town implements Comparable<Town> {
         } else {
             permissionBypass = PermissionProxy.getPermissionManager().hasPermission(res.getUUID(), flagType.getBypassPermission());
 
-                if (!permissionBypass) {
-                    if (!silent)
-                        res.protectionDenial(flagType, formatOwner());
-                    return false;
-                }
+            if (!permissionBypass) {
+                if (!silent)
+                    res.protectionDenial(flagType, formatOwner());
+                return false;
             }
         }
 
