@@ -140,7 +140,7 @@ public class ExtraEventsHandler {
                 entityIterator.remove();
             else {
                 for (SegmentEntity segment: ProtectionManager.segmentsEntity.get(entity.getClass())){
-                    if(!segment.shouldAttack(entity, exploder)){
+                    if(!segment.shouldInteract(entity, exploder)){
                         entityIterator.remove();
                         if(!silentPvE){
                             exploder.protectionDenial(FlagType.PVE);
