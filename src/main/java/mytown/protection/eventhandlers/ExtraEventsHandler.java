@@ -16,6 +16,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
 import net.minecraftforge.event.world.ExplosionEvent;
 
 import java.util.Iterator;
@@ -60,30 +61,38 @@ public class ExtraEventsHandler {
         }
 
         if(ev.explosion.exploder == null){
-            @SuppressWarnings("unchecked")
-            List<Entity> list = ev.world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(
-                    ev.explosion.explosionX-0.5, ev.explosion.explosionY-0.5, ev.explosion.explosionZ-0.5,
-                    ev.explosion.explosionX+0.5, ev.explosion.explosionY+0.5, ev.explosion.explosionZ+0.5
-            ));
+            ev.explosion.exploder = findExploder(ev.world, ev.explosion.explosionX, ev.explosion.explosionY, ev.explosion.explosionZ, 0.5, Entity.class);
 
-            if(list.size() == 1)
-                ev.explosion.exploder = list.get(0);
-            else {
-                double distance = Double.MAX_VALUE;
-                Entity closest = null;
-
-                for(Entity e: list){
-                    double d = e.getDistanceSq(ev.explosion.explosionX, ev.explosion.explosionY, ev.explosion.explosionZ);
-                    if(d < distance){
-                        distance = d;
-                        closest = e;
-                        if(distance == 0)
-                            break;
-                    }
-                }
-
-                ev.explosion.exploder = closest;
+            if(ev.explosion.exploder == null) {
+                ev.explosion.exploder = findExploder(ev.world, ev.explosion.explosionX, ev.explosion.explosionY, ev.explosion.explosionZ, 40, EntityPlayer.class);
             }
+        }
+    }
+
+    private Entity findExploder(World world, double explosionX, double explosionY, double explosionZ, double range, Class filter){
+        @SuppressWarnings("unchecked")
+        List<Entity> list = world.getEntitiesWithinAABB(filter, AxisAlignedBB.getBoundingBox(
+                explosionX-range, explosionY-range, explosionZ-range,
+                explosionX+range, explosionY+range, explosionZ+range
+        ));
+
+        if(list.size() == 1)
+            return list.get(0);
+        else {
+            double distance = Double.MAX_VALUE;
+            Entity closest = null;
+
+            for(Entity e: list){
+                double d = e.getDistanceSq(explosionX, explosionY, explosionZ);
+                if(d < distance){
+                    distance = d;
+                    closest = e;
+                    if(distance == 0)
+                        break;
+                }
+            }
+
+            return closest;
         }
     }
 
