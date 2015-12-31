@@ -240,11 +240,15 @@ public class ProtectionManager {
     }
 
     public static boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, int x, int y, int z) {
+        return hasPermission(res, flagType, dim, x, y, z, false);
+    }
+
+    public static boolean hasPermission(Resident res, FlagType<Boolean> flagType, int dim, int x, int y, int z, boolean silent) {
         if(MyTownUniverse.instance.blocks.contains(dim, x >> 4, z >> 4)) {
             Town town = MyTownUniverse.instance.blocks.get(dim, x >> 4, z >> 4).getTown();
-            return town.hasPermission(res, flagType, dim, x, y, z);
+            return town.hasPermission(res, flagType, dim, x, y, z, silent);
         } else {
-            return !flagType.isWildPerm || Wild.instance.hasPermission(res, flagType);
+            return !flagType.isWildPerm || Wild.instance.hasPermission(res, flagType, silent);
         }
     }
 
