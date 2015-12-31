@@ -98,7 +98,7 @@ public class SegmentEntity extends Segment {
                     selector
             );
 
-            if(permissionFailedEntities != null && !permissionFailedEntities.isEmpty() && selector.isEntityApplicable(mop.entityHit))
+            if(permissionFailedEntities != null && !permissionFailedEntities.isEmpty() || selector.isEntityApplicable(mop.entityHit))
                 return false;
         }
         else if(selector.isEntityApplicable(mop.entityHit))
