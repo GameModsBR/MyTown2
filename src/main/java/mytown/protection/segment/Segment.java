@@ -3,13 +3,12 @@ package mytown.protection.segment;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
 import com.google.gson.internal.LazilyParsedNumber;
-
 import myessentials.entities.Volume;
 import myessentials.json.SerializerTemplate;
 import mytown.MyTown;
-import mytown.new_datasource.MyTownUniverse;
-import mytown.entities.*;
+import mytown.entities.Resident;
 import mytown.entities.flag.FlagType;
+import mytown.new_datasource.MyTownUniverse;
 import mytown.protection.ProtectionManager;
 import mytown.protection.segment.enums.BlockType;
 import mytown.protection.segment.enums.EntityType;
@@ -20,10 +19,9 @@ import mytown.util.exceptions.ConditionException;
 import mytown.util.exceptions.GetterException;
 import mytown.util.exceptions.ProtectionParseException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.util.FakePlayer;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -54,6 +52,7 @@ public abstract class Segment {
         return this.priority;
     }
 
+    @Nullable
     public Resident getOwner(Object object) {
         try {
             EntityPlayer player = getters.contains("owner") ? (EntityPlayer) getters.get("owner").invoke(EntityPlayer.class, object, object) : null;

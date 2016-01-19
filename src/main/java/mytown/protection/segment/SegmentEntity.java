@@ -133,11 +133,11 @@ public class SegmentEntity extends Segment {
         int y = (int) Math.floor(entity.posY);
         int z = (int) Math.floor(entity.posZ);
 
-        if (owner != null && res.getUUID().equals(owner.getUUID())) {
+        if (owner != null && res != null && res.getUUID().equals(owner.getUUID())) {
             return true;
         }
 
-        if (!hasPermissionAtLocation(res, dim, x, y, z)) {
+        if (res != null && !hasPermissionAtLocation(res, dim, x, y, z)) {
             return false;
         }
 
