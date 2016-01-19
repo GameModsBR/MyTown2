@@ -9,11 +9,11 @@ import myessentials.utils.WorldUtils;
 import mypermissions.api.command.CommandResponse;
 import mypermissions.api.command.annotation.Command;
 import mytown.config.Config;
-import mytown.new_datasource.MyTownUniverse;
 import mytown.entities.*;
 import mytown.entities.flag.Flag;
 import mytown.entities.flag.FlagType;
 import mytown.entities.tools.WhitelisterTool;
+import mytown.new_datasource.MyTownUniverse;
 import mytown.proxies.EconomyProxy;
 import mytown.util.MyTownUtils;
 import mytown.util.exceptions.MyTownCommandException;
@@ -97,6 +97,10 @@ public class CommandsAssistant extends Commands {
                 throw new MyTownCommandException("mytown.cmd.err.notPositiveInteger", args.get(0));
 
             int radius = Integer.parseInt(args.get(0));
+
+            if (town.townBlocksContainer.size() + radius*radius > town.getMaxBlocks())
+                throw new MyTownCommandException("mytown.cmd.err.town.maxBlocks", radius*radius);
+
             List<ChunkPos> chunks = WorldUtils.getChunksInBox(player.dimension, (int) (player.posX - radius * 16), (int) (player.posZ - radius * 16), (int) (player.posX + radius * 16), (int) (player.posZ + radius * 16));
             isFarClaim = true;
 
@@ -116,9 +120,6 @@ public class CommandsAssistant extends Commands {
                     }
                 }
             }
-
-            if (town.townBlocksContainer.size() + chunks.size() > town.getMaxBlocks())
-                throw new MyTownCommandException("mytown.cmd.err.town.maxBlocks", chunks.size());
 
             if (isFarClaim && town.townBlocksContainer.getFarClaims() + 1 > town.getMaxFarClaims())
                 throw new MyTownCommandException("mytown.cmd.err.claim.far.notAllowed");
